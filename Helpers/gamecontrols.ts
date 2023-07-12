@@ -23,9 +23,6 @@ export default function gamecontrols():HTMLDivElement {
     const newgame = document.createElement("button");
     newgame.id = "newgame";
     newgame.textContent = "New Game";
-    newgame.addEventListener("click", () => {
-        console.log("hello world");
-    });
     gamecontrols.appendChild(newgame);
 
     return gamecontrols;
