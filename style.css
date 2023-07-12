@@ -88,6 +88,7 @@ h1 {
     height: 3rem;
     aspect-ratio: 1/1;
     border: 1px black solid;
+    box-sizing: border-box;
 }
 
 .sizeselector:hover {

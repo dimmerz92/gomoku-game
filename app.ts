@@ -1,4 +1,3 @@
-import Gameboard from "./Classes/Gameboard";
-const gameboard = new Gameboard(5);
+import Handler from "./Classes/Handler";
 
-document.getElementById("main")?.append(gameboard.element);
+const handler = new Handler()

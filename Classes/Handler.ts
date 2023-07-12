@@ -18,17 +18,30 @@ export default class Handler {
         this.newgame = document.getElementById("newgame");
         this.newgame?.addEventListener("click", () => {
             this.getGridSize();
-            this.gameboard = new Gameboard(this.size);
+            this.gameboard = new Gameboard(this, this.size);
+            this.player = PLAYER.A;
             Render.removeNode("gameboard");
             Render.append(this.gameboard.element, "main");
         });
     }
 
-    getGridSize():void {
+    private getGridSize():void {
         const sizes = document.getElementById("gridsize")?.children;
         if (sizes && !Array.from(sizes).some(c => c.classList.contains("selected"))) {
             return;
         }
         this.size = Number(document.getElementsByClassName("sizeselector selected")[0].id)
+    }
+
+    get whosTurn():string {
+        return this.player.toLowerCase();
+    }
+
+    public nextTurn():void {
+        if (this.player === PLAYER.A) {
+            this.player = PLAYER.B;
+        } else {
+            this.player = PLAYER.A;
+        }
     }
 }

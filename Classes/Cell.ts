@@ -1,7 +1,4 @@
-enum PLAYER {
-    A = "PLAYER-A",
-    B = "PLAYER-B"
-}
+import Handler from "./Handler";
 
 enum STATUS {
     AVAILABLE = "AVAILABLE",
@@ -9,13 +6,15 @@ enum STATUS {
 }
 
 class Cell {
-    id:number;
-    status:STATUS;
-    element:HTMLDivElement;
+    private id:number;
+    private status:STATUS;
+    private handler:Handler;
+    public element:HTMLDivElement;
 
-    constructor(id:number) { // add a game handler class later
+    constructor(handler:Handler, id:number) { // add a game handler class later
         this.id = id;
         this.status = STATUS.AVAILABLE;
+        this.handler = handler;
         this.element = document.createElement("div");
         this.element.classList.add("cell");
         this.element.classList.add(this.status.toLowerCase());
@@ -27,8 +26,12 @@ class Cell {
     handleClick() {
         if (this.status === STATUS.OCCUPIED) return;
         this.element.classList.remove(this.status.toLowerCase());
+        this.status = STATUS.OCCUPIED;
         this.element.classList.add(STATUS.OCCUPIED.toLowerCase());
-        // add code to add pebble later
+        const pebble = document.createElement("div");
+        pebble.classList.add("pebble", this.handler.whosTurn);
+        this.element.appendChild(pebble);
+        this.handler.nextTurn();
     }
 }
 
