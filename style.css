@@ -3,6 +3,7 @@
     --pebble-white: #FEFBEA;
     --pebble-black-light: #888B8D;
     --pebble-black-dark: #36454f;
+    --selected: #E0A526;
 }
 
 body {
@@ -23,13 +24,13 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap:1em;
-    margin: 1em 0;
+    gap: 1rem;
+    margin: 1rem 0;
 }
 
 .row {
     display: flex;
-    gap:1em;
+    gap:1rem;
 }
 
 .cell {
@@ -37,7 +38,7 @@ h1 {
     justify-content: center;
     align-items: center;
     position: relative;
-    height: 2em;
+    height: 2rem;
     aspect-ratio: 1/1;
     border: 1px solid black;
     border-radius: 50%;
@@ -49,7 +50,7 @@ h1 {
     cursor: pointer;
 }
 
-.pebble.black {
+.pebble.player-a {
     height: 80%;
     width: 80%;
     border-radius: 50%;
@@ -57,7 +58,7 @@ h1 {
     background: radial-gradient(circle at 33% 33%, var(--pebble-black-light) 20%, var(--pebble-black-dark) 50%, #000);
 }
 
-.pebble.white {
+.pebble.player-b {
     height: 80%;
     width: 80%;
     border-radius: 50%;
@@ -65,7 +66,39 @@ h1 {
     background: radial-gradient(circle at 33% 33%, var(--pebble-white) 40%, #000 95%);
 }
 
-#game-controls {
+#gamecontrols {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     text-align: center;
     background-color: green;
+    padding: 1rem;
+}
+
+#gridsize {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.sizeselector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    aspect-ratio: 1/1;
+    border: 1px black solid;
+}
+
+.sizeselector:hover {
+    cursor: pointer;
+}
+
+.sizeselector.selected {
+    border: 2px solid var(--selected);
+}
+
+#newgame {
+    align-self: center;
+    width: 7rem;
 }
