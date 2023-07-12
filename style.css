@@ -19,7 +19,7 @@ h1 {
     margin: 0;
 }
 
-#game-board {
+#gameboard {
     display: flex;
     flex-direction: column;
     align-items: center;
