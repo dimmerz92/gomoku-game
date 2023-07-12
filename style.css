@@ -1,5 +1,8 @@
 :root {
     font-family: Helvetica;
+    --pebble-white: #FEFBEA;
+    --pebble-black-light: #888B8D;
+    --pebble-black-dark: #36454f;
 }
 
 body {
@@ -33,10 +36,33 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     height: 2em;
     aspect-ratio: 1/1;
     border: 1px solid black;
-    border-radius: 1em;
+    border-radius: 50%;
+    background: lightgray;
+}
+
+.available:hover {
+    background-color: green;
+    cursor: pointer;
+}
+
+.pebble.black {
+    height: 80%;
+    width: 80%;
+    border-radius: 50%;
+    background: black;
+    background: radial-gradient(circle at 33% 33%, var(--pebble-black-light) 20%, var(--pebble-black-dark) 50%, #000);
+}
+
+.pebble.white {
+    height: 80%;
+    width: 80%;
+    border-radius: 50%;
+    background: black;
+    background: radial-gradient(circle at 33% 33%, var(--pebble-white) 40%, #000 95%);
 }
 
 #game-controls {
