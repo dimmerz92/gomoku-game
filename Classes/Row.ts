@@ -4,7 +4,7 @@ import Handler from "./Handler";
 class Row {
     private id:number;
     private cells:Cell[];
-    public element:HTMLDivElement;
+    private element:HTMLDivElement;
 
     constructor(handler:Handler, id:number, nCells:number) {
         this.id = id;
@@ -14,7 +14,11 @@ class Row {
         });
         this.element = document.createElement("div");
         this.element.classList.add("row");
-        this.element.append(...this.cells.map(cell => cell.element));
+        this.element.append(...this.cells.map(cell => cell.getCell));
+    }
+
+    get getRows():HTMLDivElement {
+        return this.element;
     }
 }
 

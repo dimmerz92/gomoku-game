@@ -21,7 +21,7 @@ export default class Handler {
             this.gameboard = new Gameboard(this, this.size);
             this.player = PLAYER.A;
             Render.removeNode("gameboard");
-            Render.append(this.gameboard.element, "main");
+            Render.append(this.gameboard.getGameboard, "main");
         });
     }
 

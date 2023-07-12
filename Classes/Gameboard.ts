@@ -3,7 +3,7 @@ import Row from "./Row";
 
 class Gameboard {
     private rows:Row[];
-    public element:HTMLDivElement;
+    private element:HTMLDivElement;
 
     constructor(handler:Handler, nRows:number) {
         this.rows = Array.from({length: nRows}, (_, i) => {
@@ -11,7 +11,11 @@ class Gameboard {
         });
         this.element = document.createElement("div");
         this.element.id = "gameboard";
-        this.element.append(...this.rows.map(row => row.element));
+        this.element.append(...this.rows.map(row => row.getRows));
+    }
+
+    get getGameboard():HTMLDivElement {
+        return this.element;
     }
 }
 

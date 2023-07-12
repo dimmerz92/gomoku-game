@@ -9,7 +9,7 @@ class Cell {
     private id:number;
     private status:STATUS;
     private handler:Handler;
-    public element:HTMLDivElement;
+    private element:HTMLDivElement;
 
     constructor(handler:Handler, id:number) { // add a game handler class later
         this.id = id;
@@ -23,7 +23,7 @@ class Cell {
         });
     }
 
-    handleClick() {
+    private handleClick() {
         if (this.status === STATUS.OCCUPIED) return;
         this.element.classList.remove(this.status.toLowerCase());
         this.status = STATUS.OCCUPIED;
@@ -32,6 +32,10 @@ class Cell {
         pebble.classList.add("pebble", this.handler.whosTurn);
         this.element.appendChild(pebble);
         this.handler.nextTurn();
+    }
+
+    get getCell():HTMLDivElement {
+        return this.element;
     }
 }
 
