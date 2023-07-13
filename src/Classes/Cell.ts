@@ -18,9 +18,7 @@ class Cell {
         this.element = document.createElement("div");
         this.element.classList.add("cell");
         this.element.classList.add(this.status.toLowerCase());
-        this.element.addEventListener("click", () =>{
-            this.handleClick();
-        });
+        this.element.addEventListener("click", this.handleClick);
     }
 
     private handleClick() {
@@ -31,11 +29,15 @@ class Cell {
         const pebble = document.createElement("div");
         pebble.classList.add("pebble", this.handler.whosTurn);
         this.element.appendChild(pebble);
-        this.handler.nextTurn();
+        this.handler.nextTurn(this.id);
     }
 
     get getCell():HTMLDivElement {
         return this.element;
+    }
+
+    public removeHandler():void {
+        this.element.removeEventListener("click", this.handleClick);
     }
 }
 
