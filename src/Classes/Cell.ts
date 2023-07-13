@@ -18,7 +18,9 @@ class Cell {
         this.element = document.createElement("div");
         this.element.classList.add("cell");
         this.element.classList.add(this.status.toLowerCase());
-        this.element.addEventListener("click", this.handleClick);
+        this.element.addEventListener("click", () => {
+            this.handleClick();
+        });
     }
 
     private handleClick() {
@@ -37,7 +39,9 @@ class Cell {
     }
 
     public removeHandler():void {
-        this.element.removeEventListener("click", this.handleClick);
+        this.element.removeEventListener("click", () => {
+            this.handleClick();
+        });
     }
 }
 
