@@ -20,6 +20,10 @@ class Row {
     get getRows():HTMLDivElement {
         return this.element;
     }
+
+    get getCells():Cell[] {
+        return this.cells;
+    }
 }
 
 export default Row;
