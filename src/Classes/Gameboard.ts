@@ -17,6 +17,10 @@ class Gameboard {
     get getGameboard():HTMLDivElement {
         return this.element;
     }
+
+    get getRows():Row[] {
+        return this.rows;
+    }
 }
 
 export default Gameboard;
