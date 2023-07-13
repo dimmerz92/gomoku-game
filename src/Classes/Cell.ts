@@ -1,5 +1,7 @@
 import Handler from "./Handler";
 
+type Method = () => void;
+
 enum STATUS {
     AVAILABLE = "AVAILABLE",
     OCCUPIED = "OCCUPIED" 
@@ -9,6 +11,7 @@ class Cell {
     private id:number;
     private status:STATUS;
     private handler:Handler;
+    private eventHandler:Method;
     private element:HTMLDivElement;
 
     constructor(handler:Handler, id:number) { // add a game handler class later
@@ -18,12 +21,12 @@ class Cell {
         this.element = document.createElement("div");
         this.element.classList.add("cell");
         this.element.classList.add(this.status.toLowerCase());
-        this.element.addEventListener("click", () => {
-            this.handleClick();
-        });
+        this.eventHandler = this.handleClick.bind(this);
+        this.element.addEventListener("click", this.eventHandler);
+        console.log(typeof(this.eventHandler))
     }
 
-    private handleClick() {
+    private handleClick():void {
         if (this.status === STATUS.OCCUPIED) return;
         this.element.classList.remove(this.status.toLowerCase());
         this.status = STATUS.OCCUPIED;
@@ -39,9 +42,7 @@ class Cell {
     }
 
     public removeHandler():void {
-        this.element.removeEventListener("click", () => {
-            this.handleClick();
-        });
+        this.element.removeEventListener("click", this.eventHandler);
     }
 }
 
