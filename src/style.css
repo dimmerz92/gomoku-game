@@ -1,18 +1,25 @@
 :root {
     font-family: Helvetica;
+    color: #F1E8B8;
     --pebble-white: #FEFBEA;
     --pebble-black-light: #888B8D;
     --pebble-black-dark: #36454f;
-    --selected: #E0A526;
+    --selected: #FFBF46;
+    --head-bg: #648381;
+    --controls-bg: #575761;
+    --main-bg: #E4FDE1;
+    height: 100%;
 }
 
 body {
-    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     margin: 0;
 }
 
 header {
-    background-color: pink;
+    background-color: var(--head-bg);
 }
 
 h1 {
@@ -24,7 +31,9 @@ h1 {
 #main {
     display: flex;
     flex-direction: column;
+    flex: 1;
     align-items: center;
+    background-color: var(--main-bg);
 }
 
 #main > * {
@@ -35,7 +44,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: green;
+    background-color: var(--controls-bg);
 }
 
 #gamecontrols > * {
@@ -53,6 +62,8 @@ h1 {
 #gameboard {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    justify-content: center;
     align-items: center;
     gap: 1rem;
     margin: 1rem 0;
@@ -76,7 +87,7 @@ h1 {
 }
 
 .available:hover {
-    background-color: green;
+    background-color: var(--head-bg);
     cursor: pointer;
 }
 
@@ -117,10 +128,13 @@ h1 {
 }
 
 .sizeselector.selected {
+    color: var(--selected);
     border: 2px solid var(--selected);
 }
 
 #newgame {
+    height: 2rem;
+    border:none;
     align-self: center;
     width: 7rem;
 }
