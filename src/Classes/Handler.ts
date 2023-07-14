@@ -3,8 +3,8 @@ import Gameboard from "./Gameboard";
 import { Render } from "./Render";
 
 enum PLAYER {
-    A = "PLAYER-A",
-    B = "PLAYER-B"
+    A = "BLACK",
+    B = "WHITE"
 }
 
 enum RESULT {
@@ -95,7 +95,7 @@ export default class Handler {
         const h2 = document.createElement("h2");
         h2.textContent = result === RESULT.WIN ? `${this.player} WON!` : "THE GAME ENDED IN A DRAW"
         div.appendChild(h2);
-        Render.append(div, "main");
+        Render.append(div, this.player.toLowerCase());
         this.gameboard.getRows.forEach(row => {
             row.getCells.forEach(cell => {
                 cell.removeHandler()
