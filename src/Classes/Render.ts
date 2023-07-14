@@ -1,11 +1,12 @@
 export abstract class Render {
     public static append(source:HTMLDivElement, target:string):void {
+        if (document.getElementById(source.id)) return;
         const DOMtarget = document.getElementById(target);
-        DOMtarget?.append(source);
+        if(DOMtarget) DOMtarget.append(source);
     }
 
     public static removeNode(target: string):void {
         const element = document.getElementById(target);
-        element?.remove();
+        if(element) element.remove();
     }
 }

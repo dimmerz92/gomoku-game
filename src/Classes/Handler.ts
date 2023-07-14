@@ -29,6 +29,10 @@ export default class Handler {
             Render.removeNode("gameboard");
             Render.removeNode("endgame");
             Render.append(this.gameboard.getGameboard, "main");
+            const h2 = document.createElement("h2");
+            h2.id = `${this.player.toLowerCase()}Turn`;
+            h2.textContent = `${this.player}'S TURN`;
+            Render.append(h2, this.player.toLowerCase());
         });
     }
 
@@ -49,6 +53,7 @@ export default class Handler {
         const row = Math.floor(cellId / this.size);
         const col = cellId % this.size;
         this.gamemap[row][col] = this.player;
+        Render.removeNode(`${this.player.toLowerCase()}Turn`);
         const result = this.gameStatus(cellId, row, col);
         if (result) return this.endGame(result);
         if (this.player === PLAYER.A) {
@@ -56,6 +61,10 @@ export default class Handler {
         } else {
             this.player = PLAYER.A;
         }
+        const h2 = document.createElement("h2");
+        h2.id = `${this.player.toLowerCase()}Turn`;
+        h2.textContent = `${this.player}'S TURN`;
+        Render.append(h2, this.player.toLowerCase());
     }
 
     private gameStatus(cellId:number, row:number, col:number):RESULT|false {
@@ -90,12 +99,11 @@ export default class Handler {
     }
 
     private endGame(result:RESULT):void {
-        const div = document.createElement("div");
-        div.id = "endgame";
+        Render.removeNode(`${this.player.toLowerCase()}Turn`);
         const h2 = document.createElement("h2");
+        h2.id = "endgame";
         h2.textContent = result === RESULT.WIN ? `${this.player} WON!` : "THE GAME ENDED IN A DRAW"
-        div.appendChild(h2);
-        Render.append(div, this.player.toLowerCase());
+        Render.append(h2, this.player.toLowerCase());
         this.gameboard.getRows.forEach(row => {
             row.getCells.forEach(cell => {
                 cell.removeHandler()
