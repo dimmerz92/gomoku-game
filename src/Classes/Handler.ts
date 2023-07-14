@@ -59,9 +59,11 @@ export default class Handler {
     }
 
     private gameStatus(cellId:number, row:number, col:number):RESULT|false {
-        if ((this.diagonalCheck(cellId, 1) + this.diagonalCheck(cellId, -1) - 1) === this.size) {
+        const leftDiag = this.diagonalCheck(cellId, this.size + 1) + this.diagonalCheck(cellId, -this.size + 1) - 1;
+        const rightDiag = this.diagonalCheck(cellId, this.size - 1) + this.diagonalCheck(cellId, -this.size - 1) - 1;
+        if (rightDiag === 5 || leftDiag === 5) {
             return RESULT.WIN;
-        } else if (this.linearCheck(row) === this.size || this.linearCheck(-1, col)) {
+        } else if (this.linearCheck(row) || this.linearCheck(-1, col)) {
             return RESULT.WIN;
         } else if (this.gamemap.flat().every(i => i !== undefined)) {
             return RESULT.DRAW;
@@ -76,24 +78,21 @@ export default class Handler {
         return 1 + this.diagonalCheck(cellId + direction, direction);
     }
 
-    private linearCheck(row:number, col:number = -1):number {
+    private linearCheck(row:number, col:number = -1):boolean {
         const arr = col < 0 ? this.gamemap[row] : this.gamemap.map(i => i[col]);
-        let count = 0;
-        for (let i = 1; i < arr.length; i++) {
-            if (arr[i] !== this.player) {
-                count = 0;
-            } else {
-                count++;
+        if (this.size === 5) return arr.every(i => i === this.player);
+        for (let i = 0; i < this.size - 5; i++) {
+            if (arr.slice(i, i + 5).every(i => i === this.player)) {
+                return true;
             }
         }
-        return count;
+        return false;
     }
 
     private endGame(result:RESULT):void {
         const div = document.createElement("div");
         div.id = "endgame";
         const h2 = document.createElement("h2");
-        console.log(result)
         h2.textContent = result === RESULT.WIN ? `${this.player} WON!` : "THE GAME ENDED IN A DRAW"
         div.appendChild(h2);
         Render.append(div, "main");

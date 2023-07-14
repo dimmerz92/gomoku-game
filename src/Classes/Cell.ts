@@ -23,7 +23,6 @@ class Cell {
         this.element.classList.add(this.status.toLowerCase());
         this.eventHandler = this.handleClick.bind(this);
         this.element.addEventListener("click", this.eventHandler);
-        console.log(typeof(this.eventHandler))
     }
 
     private handleClick():void {
