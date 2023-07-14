@@ -41,6 +41,7 @@ export default function gamecontrols():HTMLDivElement {
     return gamecontrols;
 }
 
+// applies the selected id to the selected html element
 function selectGridSize(size:number):void {
     const sizeElements = document.getElementById("gridsize")?.children;
     for (let i = 0; sizeElements && i < sizeElements?.length; i++) {

@@ -25,6 +25,7 @@ class Cell {
         this.element.addEventListener("click", this.eventHandler);
     }
 
+    // handles a click event on an individual cell
     private handleClick():void {
         if (this.status === STATUS.OCCUPIED) return;
         this.element.classList.remove(this.status.toLowerCase());
