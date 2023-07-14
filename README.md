@@ -17,5 +17,7 @@ The game is turn based, with an indicator in the controls banner showing whos tu
 
 ## How to Run
 - Dependencies: Typescript, Yarn
-- Run the following command in the project directory: `yarn start`
+- Run the following commands in the project directory:
+    - `yarn install`
+    - `yarn start`
 - In a browser, navigate to [localhost:1234](http://localhost:1234)
