@@ -8,7 +8,7 @@ export default function gamecontrols():HTMLDivElement {
     gridsize.id = "gridsize";
 
     // iteratively add grid size selectors
-    for (let i of [5,9,13,17]) {
+    for (let i of [5,7,9,11]) {
         const selector = document.createElement("div");
         selector.id = String(i);
         selector.classList.add("sizeselector");
