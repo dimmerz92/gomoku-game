@@ -1,6 +1,7 @@
 # Gomoku
 
 Author/Dev: Andrew Weymes
+
 UNE COSC 560 AWP Trimester 2 2023
 
 ## Preamble
