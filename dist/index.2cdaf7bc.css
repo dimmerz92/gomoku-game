@@ -1,0 +1,146 @@
+:root {
+  color: #f1e8b8;
+  --pebble-white: #fefbea;
+  --pebble-black-light: #888b8d;
+  --pebble-black-dark: #36454f;
+  --selected: #ffbf46;
+  --head-bg: #648381;
+  --controls-bg: #575761;
+  --main-bg: #e4fde1;
+  height: 100%;
+  font-family: Helvetica;
+}
+
+body {
+  height: 100%;
+  flex-direction: column;
+  margin: 0;
+  display: flex;
+}
+
+header {
+  background-color: var(--head-bg);
+}
+
+h1 {
+  text-align: center;
+  margin: 0;
+  padding: 1rem;
+}
+
+#main {
+  background-color: var(--main-bg);
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  display: flex;
+}
+
+#main > * {
+  width: 100%;
+}
+
+#gamecontrols {
+  background-color: var(--controls-bg);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+#gamecontrols > * {
+  width: 33.3333%;
+}
+
+#black, #white {
+  text-align: center;
+}
+
+#buttons {
+  text-align: center;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  display: flex;
+}
+
+#gameboard {
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+  display: flex;
+}
+
+.row {
+  gap: 1rem;
+  display: flex;
+}
+
+.cell {
+  height: 2rem;
+  aspect-ratio: 1 / 1;
+  background: #d3d3d3;
+  border: 1px solid #000;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+}
+
+.available:hover {
+  background-color: var(--head-bg);
+  cursor: pointer;
+}
+
+.pebble.black {
+  height: 80%;
+  width: 80%;
+  background: #000;
+  background: radial-gradient(circle at 33% 33%, var(--pebble-black-light) 20%, var(--pebble-black-dark) 50%, #000);
+  border-radius: 50%;
+}
+
+.pebble.white {
+  height: 80%;
+  width: 80%;
+  background: #000;
+  background: radial-gradient(circle at 33% 33%, var(--pebble-white) 40%, #000 95%);
+  border-radius: 50%;
+}
+
+#gridsize {
+  justify-content: center;
+  gap: 1rem;
+  display: flex;
+}
+
+.sizeselector {
+  height: 3rem;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
+  border: 1px solid #000;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.sizeselector:hover {
+  cursor: pointer;
+}
+
+.sizeselector.selected {
+  color: var(--selected);
+  border: 2px solid var(--selected);
+}
+
+#newgame {
+  height: 2rem;
+  width: 7rem;
+  border: none;
+  align-self: center;
+}
+
+/*# sourceMappingURL=index.2cdaf7bc.css.map */
