@@ -1,10 +1,12 @@
 import styles from "./Login.module.css";
 import users from "../data/users.json";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Input } from "../components";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../contexts";
 
 export default function Login() {
+  const { login } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [incorrect, setIncorrect] = useState(false);
@@ -13,7 +15,12 @@ export default function Login() {
 
   const handleLogin = () => {
     const user = users.find((u) => u.username === username && u.password === password);
-    !user ? setIncorrect(true) : navigateTo("/game");
+    if (!user) {
+      setIncorrect(true);
+    } else {
+      login(username);
+      navigateTo("/game");
+    }
   }
 
   return (
