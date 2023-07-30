@@ -1,0 +1,9 @@
+[
+    {
+        "username": "test",
+        "games": [
+            {"id": 1, "date": "30/07/2023", "outcome": "BLACK", "log":[""]},
+            {"id": 2, "date": "31/07/2023", "outcome": "WHITE", "log":[""]}
+        ]
+    }
+]

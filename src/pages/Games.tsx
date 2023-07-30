@@ -1,5 +1,15 @@
-export default function Games() {
+import { useContext } from "react";
+import { UserContext } from "../contexts";
+import { GameItem } from "../components";
+
+export default function Login() {
+  const { games } = useContext(UserContext);
+
   return (
-    <div>Games</div>
+    <>
+      {games?.games.map((game, i) => (
+        <GameItem key={i} game={game} />
+      ))}
+    </>
   )
 }

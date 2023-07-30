@@ -1,10 +1,13 @@
-import { User } from "../types";
+import { User, Games, Game } from "../types";
 import { createContext } from "react";
 
 type UserContextProps = {
     user?: User;
-    login: (username: string) => void;
+    games?: Games;
+    login: (username: string, history: object[]) => void;
     logout: () => void;
+    parseGames: (gamesList: {}[]) => void;
+    addGame: (game: Game) => void;
 }
 
 const UserContext = createContext<UserContextProps>({} as UserContextProps);

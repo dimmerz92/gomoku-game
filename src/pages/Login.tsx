@@ -1,5 +1,6 @@
 import styles from "./Login.module.css";
 import users from "../data/users.json";
+import games from "../data/games.json";
 import { useContext, useState } from "react";
 import { Button, Input } from "../components";
 import { useNavigate } from "react-router-dom";
@@ -16,10 +17,11 @@ export default function Login() {
 
   const handleLogin = () => {
     const user = users.find((u) => u.username === username && u.password === password);
+    const history = games.find((u) => u.username === username)!.games
     if (!user) {
       setIncorrect(true);
     } else {
-      login(username);
+      login(username, history);
       navigateTo(!size ? "/" : "/game");
     }
   }
