@@ -1,0 +1,8 @@
+.gameboard {
+    display: grid;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
