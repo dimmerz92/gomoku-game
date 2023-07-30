@@ -1,5 +1,7 @@
+import { BoardSize } from "../components"
+
 export default function Home() {
   return (
-    <div>Home</div>
+    <BoardSize />
   )
 }
