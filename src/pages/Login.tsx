@@ -3,10 +3,11 @@ import users from "../data/users.json";
 import { useContext, useState } from "react";
 import { Button, Input } from "../components";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../contexts";
+import { SizeContext, UserContext } from "../contexts";
 
 export default function Login() {
   const { login } = useContext(UserContext);
+  const { size } = useContext(SizeContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [incorrect, setIncorrect] = useState(false);
@@ -19,7 +20,7 @@ export default function Login() {
       setIncorrect(true);
     } else {
       login(username);
-      navigateTo("/game");
+      navigateTo(!size ? "/" : "/game");
     }
   }
 
