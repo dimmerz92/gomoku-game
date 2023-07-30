@@ -1,0 +1,11 @@
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    gap: 2rem;
+    margin: 1rem;
+}
+
+.buttons > button {
+    width: 5rem;
+}

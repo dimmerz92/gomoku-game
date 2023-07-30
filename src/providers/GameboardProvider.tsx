@@ -36,7 +36,10 @@ export default function GameboardProvider({ children }: GameboardProviderProps) 
         return false;
     }
 
-    const newBoard = () => setGameboard({ gameboard: Array(size!.size**2).fill(undefined) });
+    const newBoard = () => {
+        setGameboard({ gameboard: Array(size!.size**2).fill(undefined) });
+        setStatus(GameStatus.NOT_OVER);
+    }
     const addTurn = (id: number) => {
         gameboard!.gameboard[id] = turn!.turn;
         checkStatus(id);
