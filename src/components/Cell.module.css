@@ -14,3 +14,7 @@
     background-color: var(--head-bg);
     cursor: pointer;
 }
+
+.notavailable:hover {
+    cursor: not-allowed;
+}

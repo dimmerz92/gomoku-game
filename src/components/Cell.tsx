@@ -1,25 +1,32 @@
 import styles from "./Cell.module.css";
 import { useContext, useState } from "react"
 import { Pebble } from ".";
-import { CellStatus } from "../constants";
-import { TurnContext } from "../contexts";
+import { CellStatus, GameStatus } from "../constants";
+import { GameboardContext, TurnContext } from "../contexts";
 
 type CellProps = {
   cellId: number;
 }
 
 export default function Cell({ cellId }: CellProps) {
-    const { turn } = useContext(TurnContext);
+    const { turn, nextTurn } = useContext(TurnContext);
+    const { addTurn, status } = useContext(GameboardContext);
     const [isAvailable, setIsAvailable] = useState(CellStatus.AVAILABLE);
 
     const handleClick = () => {
+      if (status === GameStatus.NOT_OVER && isAvailable === CellStatus.AVAILABLE) {
         setIsAvailable(CellStatus.OCCUPIED);
-        //report to gamearray
+        addTurn(cellId);
+        if (status === GameStatus.NOT_OVER) nextTurn()
+      }
     }
 
     const getStyles = () => {
-      const hover = isAvailable === CellStatus.AVAILABLE ? styles.available : null;
-      return [styles.cell, hover].join(" ");
+      if (status === GameStatus.NOT_OVER && isAvailable === CellStatus.AVAILABLE) {
+        return `${styles.cell} ${styles.available}`;
+      } else {
+        return `${styles.cell} ${styles.notavailable}`;
+      }
     }
 
   return (
