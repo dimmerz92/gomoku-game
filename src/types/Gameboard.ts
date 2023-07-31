@@ -1,5 +1,5 @@
-import { PlayerColour } from "../constants";
+import { Move } from "./Move";
 
 export type Gameboard = {
-    gameboard: PlayerColour[];
+    gameboard: Move[];
 }
