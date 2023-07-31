@@ -1,18 +1,17 @@
 import styles from "./Pebble.module.css";
 import { PlayerColour } from "../constants";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { TurnContext } from "../contexts";
 
-type PebbleProps = {
-  colour: PlayerColour
-}
-
-export default function Pebble({ colour }: PebbleProps) {
+export default function Pebble() {
+  const { turn, nextTurn } = useContext(TurnContext);
   const [colourStyle, setColourStyle] = useState("");
 
   const getStyles = () => {
     if (!colourStyle) {
-      const pebbleColour = colour === PlayerColour.BLACK ? styles.black : styles.white;
+      const pebbleColour = turn!.turn === PlayerColour.BLACK ? styles.black : styles.white;
       setColourStyle([styles.pebble, pebbleColour].join(" "));
+      nextTurn()
     }
     return colourStyle;
   }

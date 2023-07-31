@@ -9,7 +9,6 @@ type CellProps = {
 }
 
 export default function Cell({ cellId }: CellProps) {
-    const { turn, nextTurn } = useContext(TurnContext);
     const { addTurn, status } = useContext(GameboardContext);
     const [isAvailable, setIsAvailable] = useState(CellStatus.AVAILABLE);
 
@@ -17,7 +16,6 @@ export default function Cell({ cellId }: CellProps) {
       if (status === GameStatus.NOT_OVER && isAvailable === CellStatus.AVAILABLE) {
         setIsAvailable(CellStatus.OCCUPIED);
         addTurn(cellId);
-        if (status === GameStatus.NOT_OVER) nextTurn()
       }
     }
 
@@ -31,7 +29,7 @@ export default function Cell({ cellId }: CellProps) {
 
   return (
     <div className={getStyles()} onClick={handleClick}>
-      {isAvailable === CellStatus.OCCUPIED ? <Pebble colour={turn?.turn!} /> : null}
+      {isAvailable === CellStatus.OCCUPIED ? <Pebble /> : null}
     </div>
   )
 }
