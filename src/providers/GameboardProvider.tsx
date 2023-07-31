@@ -1,18 +1,21 @@
-import { Gameboard } from "../types";
-import { GameboardContext, SizeContext, TurnContext } from "../contexts";
-import { useContext, useState } from "react";
+import { Game, Gameboard, Games } from "../types";
+import { GameboardContext, SizeContext, TurnContext, UserContext } from "../contexts";
+import { useContext, useEffect, useState } from "react";
 import { GameStatus, PlayerColour } from "../constants";
+import { useLocalStorage } from "../hooks";
 
 type GameboardProviderProps = {
     children: React.ReactNode;
 }
 
 export default function GameboardProvider({ children }: GameboardProviderProps) {
+    const { user } = useContext(UserContext);
     const { size } = useContext(SizeContext);
     const { turn } = useContext(TurnContext);
+    const [games, setGames] = useLocalStorage<Games>(`gomoku-${user!.user}`, {games: []} as Games);
     const [gameboard, setGameboard] = useState<Gameboard | undefined>(undefined);
     const [status, setStatus] = useState<GameStatus>(GameStatus.NOT_OVER);
-    const [count, setCount] = useState<number>(0);
+    const [count, setCount] = useState<number>(1);
 
     const diagCheck = (cellId: number, direction: number): number => {
         if (!gameboard!.gameboard[cellId]) return 0;
@@ -40,28 +43,56 @@ export default function GameboardProvider({ children }: GameboardProviderProps) 
         return false;
     }
 
+    const createGamesObj = (game: Gameboard) => {
+        const currentGame: Game = {
+            id: games.games.length + 1,
+            date: new Date().toLocaleDateString(),
+            outcome: status,
+            log: gameboard!.gameboard
+        }
+        return { games: [...games.games, currentGame] } as Games;
+    }
+
     const newBoard = () => {
         setGameboard({ gameboard: Array(size!.size**2).fill(undefined) });
         setStatus(GameStatus.NOT_OVER);
+        setCount(1);
     }
+
     const addTurn = (id: number) => {
         gameboard!.gameboard[id] = { id: count, player: turn!.turn };
         setCount(count + 1);
         checkStatus(id);
     }
+
     const checkStatus = (id: number) => {
         const row = Math.floor(id / size!.size) * size!.size;
         const col = id % size!.size;
         const leftDiag = diagCheck(id, size!.size + 1) + diagCheck(id, -(size!.size + 1)) - 1;
         const rightDiag = diagCheck(id, size!.size - 1) + diagCheck(id, -(size!.size - 1)) - 1;
-        if (rightDiag === 5 || leftDiag === 5) setStatus(GameStatus.WIN);
-        if (linearCheck(col) || linearCheck(row, true)) setStatus(GameStatus.WIN);
-        if (gameboard!.gameboard.every(i => i !== undefined)) setStatus(GameStatus.DRAW);
-        console.log(gameboard?.gameboard)
+
+        if (rightDiag === 5 || leftDiag === 5) {
+            setStatus(GameStatus.WIN);
+        } else if (linearCheck(col) || linearCheck(row, true)) {
+            setStatus(GameStatus.WIN);
+        } else if (gameboard!.gameboard.every(i => i !== undefined)) {
+            setStatus(GameStatus.DRAW);
+        }
     }
 
+    const getGames = () => games.games;
+
+    useEffect(() => {
+        if (status !== GameStatus.NOT_OVER) {
+            setGames(createGamesObj(gameboard!));
+            setStatus(GameStatus.NOT_OVER);
+        }
+    });
+
+    if (!gameboard) newBoard();
+
     return (
-        <GameboardContext.Provider value={{gameboard, status, newBoard, addTurn, checkStatus}}>
+        <GameboardContext.Provider value={{gameboard, status, newBoard, addTurn, checkStatus, getGames}}>
             { children }
         </GameboardContext.Provider>
     );

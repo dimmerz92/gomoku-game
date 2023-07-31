@@ -2,13 +2,12 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import { Home, Login, Game, Games, GameLog } from "./pages";
 import { Header } from './components';
-import { GameboardProvider, SizeProvider, TurnProvider, UserProvider } from './providers';
+import { SizeProvider, TurnProvider, UserProvider } from './providers';
 
 export default function App() {
   return (
     <SizeProvider>
       <TurnProvider>
-        <GameboardProvider>
           <UserProvider>
             <Header />
             <main id="main">
@@ -22,7 +21,6 @@ export default function App() {
               </Routes>
             </main>
           </UserProvider>
-        </GameboardProvider>
       </TurnProvider>
     </SizeProvider>
   );

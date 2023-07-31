@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import { UserContext } from "../contexts";
+import { GameboardContext } from "../contexts";
 import { GameItem } from "../components";
 
 export default function Login() {
-  const { games } = useContext(UserContext);
+  const { getGames } = useContext(GameboardContext);
 
   return (
     <>
-      {games?.games.map((game, i) => (
+      {getGames().map((game, i) => (
         <GameItem key={i} game={game} />
       ))}
     </>

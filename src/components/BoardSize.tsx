@@ -20,13 +20,12 @@ export default function BoardSize() {
       setUnselected(true);
       return;
     }
-
-    initTurn();
-    newBoard();
     
     if (!user) {
       navigateTo("/login");
     } else {
+      initTurn();
+      newBoard();
       navigateTo("/game");
     }
   }
