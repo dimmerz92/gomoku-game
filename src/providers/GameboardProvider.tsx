@@ -83,9 +83,9 @@ export default function GameboardProvider({ children }: GameboardProviderProps) 
     const getGames = () => games.games;
 
     useEffect(() => {
-        if (status !== GameStatus.NOT_OVER) {
+        if ([GameStatus.WIN, GameStatus.DRAW].includes(status)) {
             setGames(createGamesObj(gameboard!));
-            setStatus(GameStatus.NOT_OVER);
+            setStatus(GameStatus.OVER);
         }
     });
 

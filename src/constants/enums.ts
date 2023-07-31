@@ -11,5 +11,6 @@ export enum PlayerColour {
 export enum GameStatus {
     WIN = "WIN",
     DRAW = "DRAW",
-    NOT_OVER = "NOT OVER"
+    NOT_OVER = "NOT OVER",
+    OVER = "OVER"
 }
