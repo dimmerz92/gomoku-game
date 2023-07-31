@@ -1,9 +1,10 @@
 import styles from "./Pebble.module.css";
-import { PlayerColour } from "../constants";
+import { GameStatus, PlayerColour } from "../constants";
 import { useContext, useState } from "react";
-import { TurnContext } from "../contexts";
+import { GameboardContext, TurnContext } from "../contexts";
 
 export default function Pebble() {
+  const { status } = useContext(GameboardContext);
   const { turn, nextTurn } = useContext(TurnContext);
   const [colourStyle, setColourStyle] = useState("");
 
@@ -11,7 +12,7 @@ export default function Pebble() {
     if (!colourStyle) {
       const pebbleColour = turn!.turn === PlayerColour.BLACK ? styles.black : styles.white;
       setColourStyle([styles.pebble, pebbleColour].join(" "));
-      nextTurn()
+      if (status === GameStatus.NOT_OVER) nextTurn();
     }
     return colourStyle;
   }

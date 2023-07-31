@@ -22,14 +22,16 @@ export default function GameboardProvider({ children }: GameboardProviderProps) 
     const linearCheck = (index: number, row: boolean = false): boolean => {
         let arr: PlayerColour[] = [];
         if (row) {
-            arr = gameboard!.gameboard.slice(index, size!.size);
+            arr = gameboard!.gameboard.slice(index, index + size!.size);
         } else {
             for (let i = index; i < gameboard!.gameboard.length; i += size!.size) {
                 arr.push(gameboard!.gameboard[i]);
             }
         }
 
-        if (size!.size === 5) return arr.every(i => i === turn!.turn);
+        if (size!.size === 5) {
+            return arr.every(i => i === turn!.turn);
+        }
         for (let i = 0; i < size!.size - 5; i++) {
             if (arr.slice(i, i + 5).every(j => j === turn!.turn)) return true;
         }
@@ -45,7 +47,7 @@ export default function GameboardProvider({ children }: GameboardProviderProps) 
         checkStatus(id);
     }
     const checkStatus = (id: number) => {
-        const row = Math.floor(id / size!.size);
+        const row = Math.floor(id / size!.size) * size!.size;
         const col = id % size!.size;
         const leftDiag = diagCheck(id, size!.size + 1) + diagCheck(id, -(size!.size + 1)) - 1;
         const rightDiag = diagCheck(id, size!.size - 1) + diagCheck(id, -(size!.size - 1)) - 1;
