@@ -49,7 +49,6 @@ export default function GameboardProvider({ children }: GameboardProviderProps) 
         const col = id % size!.size;
         const leftDiag = diagCheck(id, size!.size + 1) + diagCheck(id, -(size!.size + 1)) - 1;
         const rightDiag = diagCheck(id, size!.size - 1) + diagCheck(id, -(size!.size - 1)) - 1;
-        console.log(`left: ${leftDiag}\tright: ${rightDiag}`)
         if (rightDiag === 5 || leftDiag === 5) setStatus(GameStatus.WIN);
         if (linearCheck(col) || linearCheck(row, true)) setStatus(GameStatus.WIN);
         if (gameboard!.gameboard.every(i => i !== undefined)) setStatus(GameStatus.DRAW);
