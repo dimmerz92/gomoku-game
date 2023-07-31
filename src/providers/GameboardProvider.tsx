@@ -13,10 +13,10 @@ export default function GameboardProvider({ children }: GameboardProviderProps) 
     const [gameboard, setGameboard] = useState<Gameboard | undefined>(undefined);
     const [status, setStatus] = useState<GameStatus>(GameStatus.NOT_OVER);
 
-    const diagCheck = (id: number, direction: number): number => {
-        if (id < 0 || id > gameboard!.gameboard.length) return 0;
-        if (gameboard!.gameboard[id] !== turn!.turn) return 0;
-        return 1 + diagCheck(id + direction, direction);
+    const diagCheck = (cellId: number, direction: number): number => {
+        if (cellId < 0 || cellId > size!.size**2) return 0;
+        if (gameboard!.gameboard[cellId] !== turn!.turn) return 0;
+        return 1 + diagCheck(cellId + direction, direction);
     }
 
     const linearCheck = (index: number, row: boolean = false): boolean => {
@@ -47,8 +47,9 @@ export default function GameboardProvider({ children }: GameboardProviderProps) 
     const checkStatus = (id: number) => {
         const row = Math.floor(id / size!.size);
         const col = id % size!.size;
-        const leftDiag = diagCheck(id, size!.size + 1) + diagCheck(id, -size!.size + 1) - 1;
-        const rightDiag = diagCheck(id, size!.size - 1) + diagCheck(id, -size!.size - 1) - 1;
+        const leftDiag = diagCheck(id, size!.size + 1) + diagCheck(id, -(size!.size + 1)) - 1;
+        const rightDiag = diagCheck(id, size!.size - 1) + diagCheck(id, -(size!.size - 1)) - 1;
+        console.log(`left: ${leftDiag}\tright: ${rightDiag}`)
         if (rightDiag === 5 || leftDiag === 5) setStatus(GameStatus.WIN);
         if (linearCheck(col) || linearCheck(row, true)) setStatus(GameStatus.WIN);
         if (gameboard!.gameboard.every(i => i !== undefined)) setStatus(GameStatus.DRAW);
