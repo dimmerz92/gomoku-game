@@ -63,7 +63,7 @@ export default function GameboardProvider({
     const currentGame: Game = {
       id: games.games.length + 1,
       date: new Date().toLocaleDateString(),
-      outcome: status,
+      outcome: turn?.turn === PlayerColour.BLACK ? GameStatus.WIN : GameStatus.LOSE,
       log: gameboard!.gameboard,
     };
     return { games: [...games.games, currentGame] } as Games;
