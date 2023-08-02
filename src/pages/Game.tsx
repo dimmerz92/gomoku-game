@@ -11,15 +11,18 @@ export default function Game() {
   const [isReset, setIsReset] = useState(0);
   const navigateTo = useNavigate();
 
+  // Handle reset button click
   const reset = () => {
     newBoard();
     isReset ? setIsReset(0) : setIsReset(1);
   };
 
+  // Handle leave button click
   const leave = () => {
     navigateTo(status === GameStatus.NOT_OVER ? "/home" : "/games");
   };
 
+  // Display metadata about the game progress
   const infoPanel = () => {
     if (status === GameStatus.NOT_OVER) {
       return `${turn!.turn}'S TURN`;

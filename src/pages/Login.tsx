@@ -15,17 +15,21 @@ export default function Login() {
 
   const navigateTo = useNavigate();
 
+  // Handle user login
   const handleLogin = () => {
     const user = users.find(
       (u) => u.username === username && u.password === password
     );
     if (!user) {
+      // Give user warning prompt if incorrect credentials
       setIncorrect(true);
     } else {
       login(username);
       if (!size) {
+        // Reroute user to home if no size specified
         navigateTo("/");
       } else {
+        // Route to game
         initTurn();
         navigateTo("/game");
       }

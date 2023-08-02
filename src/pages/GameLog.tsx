@@ -9,11 +9,11 @@ export default function GameLog() {
   const { gameid } = useParams();
   const navigateTo = useNavigate();
 
+  // Return nothing if gameid or games undefined
   if (!gameid) return null;
   const games = getGames();
   if (!games) return null;
   const log = games.find((l) => l.id === parseInt(gameid!))?.log;
-  console.log(log);
 
   return (
     <>
