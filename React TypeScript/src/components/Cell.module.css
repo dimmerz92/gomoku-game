@@ -1,0 +1,20 @@
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 2rem;
+  aspect-ratio: 1/1;
+  border: 1px solid black;
+  border-radius: 50%;
+  background: lightgray;
+}
+
+.available:hover {
+  background-color: var(--head-bg);
+  cursor: pointer;
+}
+
+.notavailable:hover {
+  cursor: not-allowed;
+}
