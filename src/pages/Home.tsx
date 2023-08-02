@@ -1,7 +1,5 @@
-import { BoardSize } from "../components"
+import { BoardSize } from "../components";
 
 export default function Home() {
-  return (
-    <BoardSize />
-  )
+  return <BoardSize />;
 }

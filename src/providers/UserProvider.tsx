@@ -4,26 +4,22 @@ import { useState } from "react";
 import { GameboardProvider } from ".";
 
 type UserProviderProps = {
-    children: React.ReactNode;
-}
+  children: React.ReactNode;
+};
 
 export default function UserProvider({ children }: UserProviderProps) {
-    const [user, setUser] = useState<User | undefined>(undefined);
+  const [user, setUser] = useState<User | undefined>(undefined);
 
-    const login = (username: string) => {
-        setUser({ user: username });
-    }
-    const logout = () => {
-        setUser(undefined);
-    }
+  const login = (username: string) => {
+    setUser({ user: username });
+  };
+  const logout = () => {
+    setUser(undefined);
+  };
 
-    return (
-        <UserContext.Provider value={{user, login, logout}}>
-            {user ? (
-                <GameboardProvider>{ children }</GameboardProvider>
-            ) : (
-                children
-            )}
-        </UserContext.Provider>
-    );
+  return (
+    <UserContext.Provider value={{ user, login, logout }}>
+      {user ? <GameboardProvider>{children}</GameboardProvider> : children}
+    </UserContext.Provider>
+  );
 }

@@ -10,15 +10,15 @@ export default function Game() {
   const { turn } = useContext(TurnContext);
   const [isReset, setIsReset] = useState(0);
   const navigateTo = useNavigate();
-  
+
   const reset = () => {
     newBoard();
     isReset ? setIsReset(0) : setIsReset(1);
-  }
+  };
 
   const leave = () => {
-    navigateTo(status === GameStatus.NOT_OVER ? "/home" : "/games")
-  }
+    navigateTo(status === GameStatus.NOT_OVER ? "/home" : "/games");
+  };
 
   const infoPanel = () => {
     if (status === GameStatus.NOT_OVER) {
@@ -28,7 +28,7 @@ export default function Game() {
     } else {
       return `${turn!.turn} WON`;
     }
-  }
+  };
 
   return (
     <>
@@ -39,5 +39,5 @@ export default function Game() {
         <Button onClick={() => leave()}>Leave</Button>
       </div>
     </>
-  )
+  );
 }

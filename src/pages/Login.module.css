@@ -1,14 +1,14 @@
 .form {
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-    gap: 1rem;
-    width: 50%;
-    margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  gap: 1rem;
+  width: 50%;
+  margin: 1rem;
 }
 
 .incorrect {
-    height: 1rem;
-    text-align: center;
-    color: crimson;
+  height: 1rem;
+  text-align: center;
+  color: crimson;
 }

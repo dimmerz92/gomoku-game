@@ -1,5 +1,5 @@
-import { PlayerColour } from "../constants"
+import { PlayerColour } from "../constants";
 
 export type Turn = {
-    turn: PlayerColour;
-}
+  turn: PlayerColour;
+};

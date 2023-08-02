@@ -12,5 +12,5 @@ export default function Login() {
         <GameItem key={i} game={game} />
       ))}
     </div>
-  )
+  );
 }

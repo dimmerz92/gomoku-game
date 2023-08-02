@@ -1,19 +1,19 @@
 .sizeButton {
-    display: flex;
-    justify-self: center;
-    justify-content: center;
-    align-items: center;
-    height: 3rem;
-    aspect-ratio: 1/1;
-    border: 1px black solid;
-    box-sizing: border-box;
+  display: flex;
+  justify-self: center;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  aspect-ratio: 1/1;
+  border: 1px black solid;
+  box-sizing: border-box;
 }
 
 .sizeButton:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .selected {
-    color: var(--selected);
-    border: 2px solid var(--selected);
+  color: var(--selected);
+  border: 2px solid var(--selected);
 }

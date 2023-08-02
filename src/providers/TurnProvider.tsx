@@ -4,20 +4,25 @@ import { TurnContext } from "../contexts";
 import { Turn } from "../types";
 
 type TurnProviderProps = {
-    children: React.ReactNode;
-}
+  children: React.ReactNode;
+};
 
 export default function TurnProvider({ children }: TurnProviderProps) {
-    const [turn, setTurn] = useState<Turn | undefined>(undefined);
+  const [turn, setTurn] = useState<Turn | undefined>(undefined);
 
-    const initTurn = () => setTurn({ turn: PlayerColour.BLACK });
-    const nextTurn = () => {
-        setTurn({ turn: turn!.turn === PlayerColour.BLACK ? PlayerColour.WHITE : PlayerColour.BLACK});
-    }
+  const initTurn = () => setTurn({ turn: PlayerColour.BLACK });
+  const nextTurn = () => {
+    setTurn({
+      turn:
+        turn!.turn === PlayerColour.BLACK
+          ? PlayerColour.WHITE
+          : PlayerColour.BLACK,
+    });
+  };
 
-    return (
-        <TurnContext.Provider value={{turn, initTurn, nextTurn}}>
-            { children }
-        </TurnContext.Provider>
-    );
+  return (
+    <TurnContext.Provider value={{ turn, initTurn, nextTurn }}>
+      {children}
+    </TurnContext.Provider>
+  );
 }

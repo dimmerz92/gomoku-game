@@ -1,6 +1,11 @@
 import styles from "./BoardSize.module.css";
 import { useContext, useState } from "react";
-import { GameboardContext, SizeContext, TurnContext, UserContext } from "../contexts";
+import {
+  GameboardContext,
+  SizeContext,
+  TurnContext,
+  UserContext,
+} from "../contexts";
 import { Button, SizeButton } from ".";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +25,7 @@ export default function BoardSize() {
       setUnselected(true);
       return;
     }
-    
+
     if (!user) {
       navigateTo("/login");
     } else {
@@ -28,15 +33,22 @@ export default function BoardSize() {
       newBoard();
       navigateTo("/game");
     }
-  }
+  };
 
   return (
     <div className={styles.sizeButtons}>
-      <span className={styles.unselected}>{unselected ? "Select a gameboard size" : null}</span>
+      <span className={styles.unselected}>
+        {unselected ? "Select a gameboard size" : null}
+      </span>
       {TILES.map((tile) => (
-          <SizeButton key={tile} size={tile} isSelected={tile===size?.size} onSelect={() => handleSizeClick(tile)} /> 
+        <SizeButton
+          key={tile}
+          size={tile}
+          isSelected={tile === size?.size}
+          onSelect={() => handleSizeClick(tile)}
+        />
       ))}
       <Button onClick={() => handleSubmit()}>Start Game</Button>
     </div>
-  )
+  );
 }

@@ -1,9 +1,9 @@
 .gameItem {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    justify-items: center;
-    align-items: center;
-    border: 1px solid black;
-    padding: 1rem;
-    width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  border: 1px solid black;
+  padding: 1rem;
+  width: 80%;
 }
