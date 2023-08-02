@@ -13,6 +13,7 @@ export default function Pebble({ move, colour }: PebbleProps) {
   const { turn, nextTurn } = useContext(TurnContext);
   const [colourStyle, setColourStyle] = useState("");
 
+  // Render coloured pebble or numbered pebble depending if game or game log
   useEffect(() => {
     if (!colourStyle) {
       let style: string;

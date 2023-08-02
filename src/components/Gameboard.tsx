@@ -11,10 +11,9 @@ type GameboardProps = {
 export default function Gameboard({ log }: GameboardProps) {
   const { size } = useContext(SizeContext);
 
+  // Determine grid size depending if game or game log
   const gameboard = () => {
     const grid = `repeat(${!log ? size!.size : Math.sqrt(log.length)}, 1fr)`;
-
-    console.log(grid);
 
     return (
       <div className={styles.gameboard} style={{ gridTemplateColumns: grid }}>

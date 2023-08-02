@@ -14,6 +14,7 @@ export default function Cell({ cellId, move, colour }: CellProps) {
   const { addTurn, status } = useContext(GameboardContext);
   const [isAvailable, setIsAvailable] = useState(CellStatus.AVAILABLE);
 
+  // If game is not over, handle clicks on cells
   const handleClick = () => {
     if (
       status === GameStatus.NOT_OVER &&
@@ -24,6 +25,7 @@ export default function Cell({ cellId, move, colour }: CellProps) {
     }
   };
 
+  // If game is not over, apply styling to cell
   const getStyles = () => {
     if (
       status === GameStatus.NOT_OVER &&
@@ -35,6 +37,7 @@ export default function Cell({ cellId, move, colour }: CellProps) {
     }
   };
 
+  // Apply appropriate style to cell depending on game or game log
   const cell = () => {
     const style = `${styles.cell} ${!move ? getStyles() : styles.notavailable}`;
 

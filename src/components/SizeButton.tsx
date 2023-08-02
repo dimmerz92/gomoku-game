@@ -11,8 +11,9 @@ export default function SizeButton({
   isSelected,
   onSelect,
 }: SizeButtonProps) {
+  // Conditionally apply styling if selected or not
   const styling = () => {
-    return [styles.sizeButton, isSelected ? styles.selected : null].join(" ");
+    return `${styles.sizeButton} ${isSelected ? styles.selected : null}`;
   };
 
   return (

@@ -17,15 +17,20 @@ export default function BoardSize() {
   const { newBoard } = useContext(GameboardContext);
   const { user } = useContext(UserContext);
   const [unselected, setUnselected] = useState(false);
-
   const navigateTo = useNavigate();
+
+  // Handle clicks on size tiles
   const handleSizeClick = (size: number) => newSize(size);
+
+  // Handle clicks on the submit button
   const handleSubmit = () => {
     if (!size) {
+      // if nothing selected, return error prompting
       setUnselected(true);
       return;
     }
 
+    // Route to Game page or reroute to login if not logged in
     if (!user) {
       navigateTo("/login");
     } else {

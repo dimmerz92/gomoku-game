@@ -7,6 +7,7 @@ export default function Header() {
   const { user, logout } = useContext(UserContext);
   const navigateTo = useNavigate();
 
+  // Route user to home on logout
   const handleLogout = () => {
     logout();
     navigateTo("/");
