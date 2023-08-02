@@ -10,7 +10,10 @@ type TurnProviderProps = {
 export default function TurnProvider({ children }: TurnProviderProps) {
   const [turn, setTurn] = useState<Turn | undefined>(undefined);
 
+  // Initialises turn to black
   const initTurn = () => setTurn({ turn: PlayerColour.BLACK });
+
+  // Changes turns between players
   const nextTurn = () => {
     setTurn({
       turn:

@@ -8,6 +8,8 @@ type SizeProviderProps = {
 
 export default function SizeProvider({ children }: SizeProviderProps) {
   const [size, setSize] = useState<Size | undefined>(undefined);
+
+  // Sets the chosen gameboard size
   const newSize = (size: number) => setSize({ size: size });
 
   return (

@@ -26,6 +26,7 @@ export default function GameboardProvider({
   const [status, setStatus] = useState<GameStatus>(GameStatus.NOT_OVER);
   const [count, setCount] = useState<number>(1);
 
+  // Recursively checks gameboard diagonals for 5 in a row
   const diagCheck = (cellId: number, direction: number): number => {
     if (!gameboard!.gameboard[cellId]) return 0;
     if (cellId < 0 || cellId > size!.size ** 2) return 0;
@@ -33,8 +34,10 @@ export default function GameboardProvider({
     return 1 + diagCheck(cellId + direction, direction);
   };
 
+  // Checks the gameboard for vertical or horizontal 5 in a row
   const linearCheck = (index: number, row: boolean = false): boolean => {
     let arr: PlayerColour[] = [];
+    // If row, get row, otherwise, get column
     if (row) {
       arr = gameboard!.gameboard
         .slice(index, index + size!.size)
@@ -45,6 +48,7 @@ export default function GameboardProvider({
       }
     }
 
+    // If 5 in a row, return true, else, false
     if (size!.size === 5) {
       return arr.every((i) => i === turn!.turn);
     }
@@ -54,6 +58,7 @@ export default function GameboardProvider({
     return false;
   };
 
+  // Creates a game object to be stored for game logs
   const createGamesObj = (game: Gameboard) => {
     const currentGame: Game = {
       id: games.games.length + 1,
@@ -64,18 +69,21 @@ export default function GameboardProvider({
     return { games: [...games.games, currentGame] } as Games;
   };
 
+  // Starts a new game
   const newBoard = () => {
     setGameboard({ gameboard: Array(size!.size ** 2).fill(undefined) });
     setStatus(GameStatus.NOT_OVER);
     setCount(1);
   };
 
+  // Adds a players turn to the board and checks the game status
   const addTurn = (id: number) => {
     gameboard!.gameboard[id] = { id: count, player: turn!.turn };
     setCount(count + 1);
     checkStatus(id);
   };
 
+  // Checks the game status and updates the state
   const checkStatus = (id: number) => {
     const row = Math.floor(id / size!.size) * size!.size;
     const col = id % size!.size;
@@ -93,6 +101,7 @@ export default function GameboardProvider({
     }
   };
 
+  // Returns a list of Game objects for game logs
   const getGames = () => games.games;
 
   useEffect(() => {
@@ -102,6 +111,7 @@ export default function GameboardProvider({
     }
   });
 
+  // Renders a gameboard if new game
   if (!gameboard && size) newBoard();
 
   return (
