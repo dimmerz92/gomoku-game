@@ -89,7 +89,7 @@ export default function GameboardProvider({ children }: GameboardProviderProps) 
         }
     });
 
-    if (!gameboard) newBoard();
+    if (!gameboard && size) newBoard();
 
     return (
         <GameboardContext.Provider value={{gameboard, status, newBoard, addTurn, checkStatus, getGames}}>

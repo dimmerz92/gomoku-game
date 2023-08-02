@@ -12,7 +12,9 @@ export default function Gameboard({ log }: GameboardProps) {
   const { size } = useContext(SizeContext);
 
   const gameboard = () => {
-    const grid = `repeat(${!log ? size!.size : log.length}, 1fr)`;
+    const grid = `repeat(${!log ? size!.size : Math.sqrt(log.length)}, 1fr)`;
+
+    console.log(grid)
     
     return (
       <div className={styles.gameboard} style={{gridTemplateColumns: grid}}>
@@ -20,7 +22,7 @@ export default function Gameboard({ log }: GameboardProps) {
           !log ? [...Array(size!.size**2)].map((_, i) => (
             <Cell key={i} cellId={i} />
           )) : log.map((move, i) => (
-            <Cell key={i} cellId={i} move={move.id} colour={move.player}/>
+            <Cell key={i} cellId={i} move={move ? move.id : undefined} colour={move ? move.player : undefined}/>
           ))
         }
       </div>

@@ -1,21 +1,20 @@
 import styles from "./GameItem.module.css";
 import { Game } from "../types"
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 type GameItemProps = {
   game: Game;
 }
 
-const handleClick = () => {
-  // use game id to open game log
-}
-
 export default function GameItem({ game }: GameItemProps) {
+  const navigateTo = useNavigate();
+  
   return (
     <div className={styles.gameItem}>
       <div>{`Game #${game.id} @${game.date}`}</div>
       <div>{`Outcome: ${game.outcome}`}</div>
-      <Button>Game Log</Button>
+      <Button onClick={() => navigateTo(`/game-log/${game.id}`)}>Game Log</Button>
     </div>
   );
 }

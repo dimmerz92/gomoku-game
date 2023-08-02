@@ -3,7 +3,7 @@ import users from "../data/users.json";
 import { useContext, useState } from "react";
 import { Button, Input } from "../components";
 import { useNavigate } from "react-router-dom";
-import { GameboardContext, SizeContext, TurnContext, UserContext } from "../contexts";
+import { SizeContext, TurnContext, UserContext } from "../contexts";
 
 export default function Login() {
   const { login } = useContext(UserContext);
@@ -21,8 +21,12 @@ export default function Login() {
       setIncorrect(true);
     } else {
       login(username);
-      initTurn();
-      navigateTo(!size ? "/" : "/game");
+      if (!size) {
+        navigateTo("/");
+      } else {
+        initTurn();
+        navigateTo("/game");
+      }
     }
   }
 
