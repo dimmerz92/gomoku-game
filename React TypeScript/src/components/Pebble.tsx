@@ -25,7 +25,7 @@ export default function Pebble({ move, colour }: PebbleProps) {
       }
       setColourStyle(`${styles.pebble} ${style}`);
     }
-  });
+  }, [colourStyle, move, turn, status, nextTurn, colour]);
 
   return <div className={colourStyle}>{move ? move : null}</div>;
 }

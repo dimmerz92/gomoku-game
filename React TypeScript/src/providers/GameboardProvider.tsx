@@ -5,7 +5,7 @@ import {
   TurnContext,
   UserContext,
 } from "../contexts";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { GameStatus, PlayerColour } from "../constants";
 import { useLocalStorage } from "../hooks";
 
@@ -114,12 +114,11 @@ export default function GameboardProvider({
   // Returns a list of Game objects for game logs
   const getGames = () => games.games;
 
-  useEffect(() => {
+
     if (finished) {
       setGames(createGamesObj(gameboard!));
       setFinished(false);
     }
-  });
 
   // Renders a gameboard if new game
   if (!gameboard && size) newBoard();
