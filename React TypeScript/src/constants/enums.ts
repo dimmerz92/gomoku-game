@@ -13,5 +13,4 @@ export enum GameStatus {
   DRAW = "DRAW",
   LOSE = "LOSE",
   NOT_OVER = "NOT OVER",
-  OVER = "OVER",
 }
