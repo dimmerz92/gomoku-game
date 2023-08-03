@@ -12,7 +12,7 @@ Gomoku is a game similar to connect 4, except you must connect 5. A player wins 
 
 ## How to Play
 
-This is a test application, the login credentials are `username: test` and `password: test`.
+This is a test application, the login credentials are `username: admin` and `password: admin`.
 
 The game is turn based, with an indicator in the controls banner showing whos turn it is. Pick a colour (black/white) and have fun playing.
 

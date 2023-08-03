@@ -5,7 +5,7 @@ import {
   TurnContext,
   UserContext,
 } from "../contexts";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { GameStatus, PlayerColour } from "../constants";
 import { useLocalStorage } from "../hooks";
 
@@ -24,6 +24,7 @@ export default function GameboardProvider({
   } as Games);
   const [gameboard, setGameboard] = useState<Gameboard | undefined>(undefined);
   const [status, setStatus] = useState<GameStatus>(GameStatus.NOT_OVER);
+  const [finished, setFinished] = useState(false);
   const [count, setCount] = useState<number>(1);
 
   // Recursively checks gameboard diagonals for 5 in a row
@@ -31,6 +32,8 @@ export default function GameboardProvider({
     if (!gameboard!.gameboard[cellId]) return 0;
     if (cellId < 0 || cellId > size!.size ** 2) return 0;
     if (gameboard!.gameboard[cellId].player !== turn!.turn) return 0;
+    if (Math.floor(cellId / size!.size) ===
+        Math.floor((cellId + direction) / size!.size)) return 0;
     return 1 + diagCheck(cellId + direction, direction);
   };
 
@@ -63,7 +66,10 @@ export default function GameboardProvider({
     const currentGame: Game = {
       id: games.games.length + 1,
       date: new Date().toLocaleDateString(),
-      outcome: turn?.turn === PlayerColour.BLACK ? GameStatus.WIN : GameStatus.LOSE,
+      outcome: status === GameStatus.DRAW ? status
+                        : turn?.turn === PlayerColour.BLACK
+                        ? GameStatus.WIN
+                        : GameStatus.LOSE,
       log: gameboard!.gameboard,
     };
     return { games: [...games.games, currentGame] } as Games;
@@ -74,6 +80,7 @@ export default function GameboardProvider({
     setGameboard({ gameboard: Array(size!.size ** 2).fill(undefined) });
     setStatus(GameStatus.NOT_OVER);
     setCount(1);
+    setFinished(false);
   };
 
   // Adds a players turn to the board and checks the game status
@@ -94,22 +101,24 @@ export default function GameboardProvider({
 
     if (rightDiag === 5 || leftDiag === 5) {
       setStatus(GameStatus.WIN);
+      setFinished(true);
     } else if (linearCheck(col) || linearCheck(row, true)) {
       setStatus(GameStatus.WIN);
+      setFinished(true);
     } else if (gameboard!.gameboard.every((i) => i !== undefined)) {
       setStatus(GameStatus.DRAW);
+      setFinished(true);
     }
   };
 
   // Returns a list of Game objects for game logs
   const getGames = () => games.games;
 
-  useEffect(() => {
-    if ([GameStatus.WIN, GameStatus.DRAW].includes(status)) {
+
+    if (finished) {
       setGames(createGamesObj(gameboard!));
-      setStatus(GameStatus.OVER);
+      setFinished(false);
     }
-  });
 
   // Renders a gameboard if new game
   if (!gameboard && size) newBoard();
