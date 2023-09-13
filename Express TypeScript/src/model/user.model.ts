@@ -1,8 +1,11 @@
 import mongoose, { Document } from "mongoose";
 
-export interface UserDocument extends Document {
+export interface UserInput {
     username: String;
     password: String;
+}
+
+export interface UserDocument extends UserInput, Document {
     createdAt?: Date;
     updatedAt?: Date;
 }
