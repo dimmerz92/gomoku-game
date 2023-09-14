@@ -20,7 +20,8 @@ export async function getGameById(user_id: string, game_id: string) {
 
 // Updates the game state for a game ID and its user
 export async function updateGameState
-    (user_id: string, game_id: string, index: number, colour: string) {
+    (user_id: string, game_id: string, index: number, colour: string,
+     turn: number) {
         const current_state = await getGameById(user_id, game_id);
         if (!current_state) {
             return null
@@ -30,7 +31,8 @@ export async function updateGameState
 
         const move: GameCell = {
             user_id: new mongoose.Types.ObjectId(user_id),
-            colour: colour
+            colour: colour,
+            turn: turn
         }
         
         const new_state = current_state.gameboard.map(

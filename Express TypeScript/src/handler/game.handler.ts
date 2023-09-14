@@ -32,8 +32,10 @@ gameHandler.put("/id/:game_id",
         const game_id = req.params.game_id;
         const index = req.body.index;
         const colour = req.body.colour;
+        const turn = req.body.turn;
 
-        const game_state = await updateGameState(user_id, game_id, index, colour);
+        const game_state = await
+            updateGameState(user_id, game_id, index, colour, turn);
 
         if (!game_state) {
             return res.status(400).send("Bad Request");
