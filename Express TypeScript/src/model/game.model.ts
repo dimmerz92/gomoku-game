@@ -4,6 +4,7 @@ import { UserDocument } from "./user.model";
 export interface GameCell {
     user_id: UserDocument["_id"];
     colour: string;
+    turn: number;
 }
 
 export interface GameInput {
