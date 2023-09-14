@@ -19,7 +19,7 @@ export async function updateGameState
         return GameModel.findOneAndUpdate({
             _id: new mongoose.Types.ObjectId(game_id),
             user_id: new mongoose.Types.ObjectId(user_id)
-        }, input);
+        }, input, { new: true });
 }
 
 export async function createGame(input: GameInput) {
