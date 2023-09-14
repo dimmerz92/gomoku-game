@@ -22,6 +22,12 @@ export default function Header() {
       </div>
       <div />
       <nav className={styles.nav}>
+        {user ? null : (
+          <div
+            className={styles.navLink} onClick={() => navigateTo("/register")}>
+            Register
+          </div>
+        )}
         <div
           className={styles.navLink}
           onClick={() => (!user ? navigateTo("/login") : handleLogout())}>
