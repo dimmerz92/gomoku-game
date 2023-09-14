@@ -4,18 +4,18 @@ import { Button, Input } from "../components";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts";
 
-export default function Login() {
-  const { login } = useContext(UserContext);
+export default function Register() {
+  const { register } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigateTo = useNavigate();
 
-  // Handle user login
-  const handleLogin = async () => {
+  // Handle user register
+  const handleRegister = async () => {
     setErrorMessage("");
-    const result = await login(username, password);
+    const result = await register(username, password);
     if (result === true) {
       navigateTo("/");
     } else {
@@ -47,7 +47,7 @@ export default function Login() {
         }
         placeholder="Password"
       />
-      <Button onClick={handleLogin}>Submit</Button>
+      <Button onClick={handleRegister}>Submit</Button>
     </form>
   );
 }
