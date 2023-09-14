@@ -2,9 +2,6 @@ import { object, string, number, TypeOf } from "zod";
 
 const postPayload = {
     body: object({
-        user_id: number({
-            required_error: "User ID is required"
-        }).nonnegative(),
         size: number({
             required_error: "Size is required"
         }).nonnegative()
@@ -13,9 +10,6 @@ const postPayload = {
 
 const putPayload = {
     body: object({
-        user_id: number({
-            required_error: "User ID is required"
-        }).nonnegative(),
         index: number({
             required_error: "Cell index is required"
         }).nonnegative(),
