@@ -26,7 +26,7 @@ authHandler.post("/register",
                 password: encryptedPassword
             });
 
-            const token = signJwt({ username, _id: newUser._id});
+            const token = signJwt({ username, _id: newUser._id });
 
             res.status(200).json({ _id: newUser._id, token });
         } catch (error) {
