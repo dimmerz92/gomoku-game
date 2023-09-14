@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import UserModel from "../model/user.model";
 import GameModel, { GameInput, GameDocument } from "../model/game.model";
 
 // Retrieves a list of games belonging to a user
@@ -39,11 +40,16 @@ export async function updateGameState
 }
 
 // Creates a new game and assigns it to the user ID
-export async function createGame(input: GameInput) {
+export async function createGame(user_id: string, size: number) {
+    const user_exists = await UserModel.exists({ _id: user_id });
+    if (!user_exists) {
+        return null;
+    }
+
     const game = {
-        user_id: new mongoose.Types.ObjectId(input.user_id),
-        size: input.size,
-        gameboard: new Array<undefined>(input.size ** 2)
+        user_id: new mongoose.Types.ObjectId(user_id),
+        size: size,
+        gameboard: new Array<undefined>(size ** 2)
     }
     return GameModel.create(game);
 }
