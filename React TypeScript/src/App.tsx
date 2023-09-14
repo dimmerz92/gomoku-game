@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { Home, Login, Game, Games, GameLog } from "./pages";
+import { Home, Register, Login, Game, Games, GameLog } from "./pages";
 import { Header } from "./components";
 import { SizeProvider, TurnProvider, UserProvider } from "./providers";
 
@@ -13,6 +13,7 @@ export default function App() {
           <main id="main">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/game" element={<Game />} />
               <Route path="/games" element={<Games />} />
