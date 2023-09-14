@@ -19,11 +19,11 @@ const cellSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        require: true
+        required: true
     },
     colour: {
         type: String,
-        require: true
+        required: true
     }
 });
 
@@ -31,15 +31,15 @@ const gameSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        require: true
+        required: true
     },
     size: {
         type: Number,
-        require: true
+        required: true
     },
     gameboard: {
         type: [cellSchema],
-        require: true
+        required: true
     }
 }, {timestamps: true});
 
