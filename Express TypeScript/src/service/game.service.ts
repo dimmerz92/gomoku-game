@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import UserModel from "../model/user.model";
-import GameModel, { GameInput, GameDocument } from "../model/game.model";
+import GameModel, { GameInput, GameDocument, GameCell } from "../model/game.model";
+import { isTerminal } from "../game_logic/win_status";
 
 // Retrieves a list of games belonging to a user
 export async function getGamesById(user_id: string) {
@@ -17,7 +18,7 @@ export async function getGameById(user_id: string, game_id: string) {
     }).lean();
 }
 
-// Updates the game state for a game ID and it's user
+// Updates the game state for a game ID and its user
 export async function updateGameState
     (user_id: string, game_id: string, index: number, colour: string) {
         const current_state = await getGameById(user_id, game_id);
@@ -25,18 +26,25 @@ export async function updateGameState
             return null
         }
 
-        const move = {
+        const status = isTerminal(current_state, index, colour);
+
+        const move: GameCell = {
             user_id: new mongoose.Types.ObjectId(user_id),
             colour: colour
         }
-
+        
         const new_state = current_state.gameboard.map(
             (v, i) => i === index ? move : v);
 
-        return GameModel.findOneAndUpdate({
+        const return_state = await GameModel.findOneAndUpdate({
             _id: new mongoose.Types.ObjectId(game_id),
             user_id: new mongoose.Types.ObjectId(user_id)
-        }, { gameboard: new_state }, { new: true });
+        }, { gameboard: new_state }, { new: true }).lean();
+
+        return {
+            status: status,
+            state: return_state
+        }
 }
 
 // Creates a new game and assigns it to the user ID

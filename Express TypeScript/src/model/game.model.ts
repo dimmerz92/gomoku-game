@@ -1,16 +1,18 @@
 import mongoose, { Document } from "mongoose";
 import { UserDocument } from "./user.model";
 
+export interface GameCell {
+    user_id: UserDocument["_id"];
+    colour: string;
+}
+
 export interface GameInput {
     user_id: UserDocument["_id"];
     size: number;
 }
 
 export interface GameDocument extends GameInput, Document {
-    gameboard: Array<undefined | {
-        user_id: UserDocument["_id"];
-        colour: string;
-    }>;
+    gameboard: Array<undefined | GameCell>;
     createdAt?: Date;
     updatedAt?: Date;
 }
