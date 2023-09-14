@@ -1,12 +1,13 @@
 import { User } from "../types";
 import { createContext } from "react";
 
-type UserContextProps = {
+type UserContextType = {
   user?: User;
-  login: (username: string) => void;
+  login: (username: string, password: string) => Promise<true | string>;
+  register: (username: string, password: string) => Promise<true | string>;
   logout: () => void;
 };
 
-const UserContext = createContext<UserContextProps>({} as UserContextProps);
+const UserContext = createContext<UserContextType>({} as UserContextType);
 
 export default UserContext;

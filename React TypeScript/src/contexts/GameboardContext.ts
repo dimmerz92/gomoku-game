@@ -1,18 +1,19 @@
-import { GameStatus } from "../constants";
-import { Gameboard, Game } from "../types";
+import { GameStatus, PlayerColour } from "../constants";
+import { GameBoard, Games } from "../types";
 import { createContext } from "react";
 
 type GameboardContextProps = {
-  gameboard?: Gameboard;
-  status: GameStatus;
-  newBoard: () => void;
-  addTurn: (id: number) => void;
-  checkStatus: (id: number) => void;
-  getGames: () => Game[];
-};
+  gameboard: GameBoard | undefined;
+  status: GameStatus | undefined;
+  turn: PlayerColour | undefined;
+  size: number | undefined;
+  newBoard: (size: number) => void;
+  resetGame: () => void;
+  nextTurn: (index: number) => void;
+  getGames: () => Games;
+}
 
-const GameboardContext = createContext<GameboardContextProps>(
-  {} as GameboardContextProps
-);
+const GameboardContext = createContext<GameboardContextProps>
+  ({} as GameboardContextProps);
 
 export default GameboardContext;
