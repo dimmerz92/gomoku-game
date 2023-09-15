@@ -9,6 +9,7 @@ type GameboardContextProps = {
   size: number | undefined;
   newBoard: (size: number, callback: () => void) => void;
   resetGame: () => void;
+  leaveGame: (callback: () => void) => void;
   nextTurn: (index: number) => void;
   getGames: () => Games;
 }

@@ -6,7 +6,7 @@ import { GameStatus } from "../constants";
 import { useNavigate } from "react-router-dom";
 
 export default function Game() {
-  const { status, turn, resetGame } = useContext(GameboardContext);
+  const { status, turn, resetGame, leaveGame } = useContext(GameboardContext);
   const [isReset, setIsReset] = useState(0);
   const navigateTo = useNavigate();
 
@@ -18,7 +18,9 @@ export default function Game() {
 
   // Handle leave button click
   const leave = () => {
-    navigateTo(status === GameStatus.CONTINUE ? "/home" : "/games");
+    leaveGame(() => {
+      navigateTo("/");
+    });
   }
 
   // Display metadata about the game progress

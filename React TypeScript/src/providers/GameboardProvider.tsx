@@ -2,7 +2,7 @@ import { Game, GameBoard, Games } from "../types";
 import { GameboardContext } from "../contexts";
 import { useState } from "react";
 import { GameStatus, PlayerColour } from "../constants";
-import { post, put } from "../utils/http";
+import { del, post, put } from "../utils/http";
 import { useNavigate } from "react-router-dom";
 
 type GameboardProviderProps = {
@@ -30,13 +30,24 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
   }
 
   const resetGame = async () => {
-    const result: GameBoard = await post(`api/game/reset/${gameboard!._id}`, {});
+    const result: GameBoard = await post
+      (`/api/game/reset/${gameboard!._id}`, {});
     if (!result) navigateTo("/");
 
     setGameboard(result);
     setStatus(GameStatus.CONTINUE);
     setTurn(PlayerColour.BLACK);
     setCount(1);
+  }
+
+  const leaveGame = async (callback: () => void) => {
+    await del(`/api/game/delete/${gameboard!._id}`);
+    setGameboard(undefined);
+    setStatus(undefined);
+    setSize(undefined);
+    setTurn(undefined);
+    setCount(0);
+    callback();
   }
 
   const nextTurn = async (index: number) => {
@@ -64,8 +75,9 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
 
   return (
     <GameboardContext.Provider
-      value={{ gameboard, status, turn, size, newBoard, resetGame, nextTurn, getGames }}>
-        {children}
+      value={{ gameboard, status, turn, size,
+        newBoard, resetGame, leaveGame, nextTurn, getGames }}>
+          {children}
     </GameboardContext.Provider>
   );
 }
