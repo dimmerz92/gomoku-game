@@ -1,13 +1,29 @@
 import express, { Request, Response } from "express";
 import validateSchema from "../middleware/validateSchema";
-import { createGameSchema, updateGameSchema, getGameSchema, resetGameSchema } from
-    "../schema/game.schema";
-import { createGame, getGameById, resetGameState, updateGameState } from "../service/game.service";
+import { createGameSchema, updateGameSchema, getGameSchema,
+    resetGameSchema, deleteGameSchema } from "../schema/game.schema";
+import { createGame, deleteGame, getGameById, resetGameState, updateGameState }
+    from "../service/game.service";
 import { deserialiseUser } from "../middleware/deserialiseUser";
  
 
 const gameHandler = express.Router();
 gameHandler.use(deserialiseUser);
+
+// Returns a game
+gameHandler.get("/id/:game_id",
+    validateSchema(getGameSchema),
+    async (req: Request, res: Response) => {
+        const user_id = req.user_id;
+        const game_id = req.params.game_id;
+
+        const game = await getGameById(user_id, game_id);
+        if (!game) {
+            return res.status(400).send("Bad Request");
+        }
+
+        return res.status(200).json(game);
+});
 
 // Creates a new game
 gameHandler.post("/",
@@ -37,7 +53,7 @@ gameHandler.post("/reset/:game_id",
             return res.status(400).send("Bad Request");
         }
 
-        return res.status(200).json(game_state);
+        return res.status(201).json(game_state);
 });
 
 // Updates the game state and returns the new game state
@@ -57,22 +73,22 @@ gameHandler.put("/:game_id",
             return res.status(400).send("Bad Request");
         }
         
-        return res.status(200).send(game_state);
+        return res.status(204).send(game_state);
 });
 
-// Returns a game
-gameHandler.get("/id/:game_id",
-    validateSchema(getGameSchema),
+// Deletes a game
+gameHandler.delete("/delete/:game_id",
+    validateSchema(deleteGameSchema),
     async (req: Request, res: Response) => {
         const user_id = req.user_id;
         const game_id = req.params.game_id;
 
-        const game = await getGameById(user_id, game_id);
-        if (!game) {
+        const result = await deleteGame(user_id, game_id);
+        if (!result) {
             return res.status(400).send("Bad Request");
         }
 
-        return res.status(200).json(game);
-});
+        return res.sendStatus(204);
+    })
 
 export default gameHandler;

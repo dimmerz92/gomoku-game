@@ -43,6 +43,17 @@ const putParams = {
     })
 }
 
+const deleteParams = {
+    params: object({
+        game_id: string({
+            required_error: "Game ID is required"
+        })
+    })
+}
+
+export const getGameSchema = object({
+    ...getParams
+});
 export const createGameSchema = object({
     ...postPayload
 });
@@ -53,8 +64,8 @@ export const updateGameSchema = object({
 export const resetGameSchema = object({
     ...postParams
 });
-export const getGameSchema = object({
-    ...getParams
+export const deleteGameSchema = object({
+    ...deleteParams
 });
 
 export type CreateGameInput = TypeOf<typeof createGameSchema>;

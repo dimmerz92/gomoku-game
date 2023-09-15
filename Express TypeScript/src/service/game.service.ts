@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import UserModel from "../model/user.model";
-import GameModel, { GameInput, GameDocument, GameCell } from "../model/game.model";
+import GameModel, { GameCell } from "../model/game.model";
 import { isTerminal } from "../game_logic/win_status";
 import { GameStatus } from "../enum/game.enum";
 
@@ -17,6 +17,19 @@ export async function getGameById(user_id: string, game_id: string) {
         _id: new mongoose.Types.ObjectId(game_id),
         user_id: new mongoose.Types.ObjectId(user_id)
     }).lean();
+}
+
+// Creates a new game and assigns it to the user ID
+export async function createGame(user_id: string, size: number) {
+    const user_exists = await UserModel.exists({ _id: user_id });
+    if (!user_exists) return null;
+
+    const game = {
+        user_id: new mongoose.Types.ObjectId(user_id),
+        size: size,
+        gameboard: new Array(size ** 2).fill(undefined)
+    }
+    return GameModel.create(game);
 }
 
 // Updates the game state for a game ID and its user
@@ -68,15 +81,13 @@ export async function resetGameState(user_id: string, game_id: string) {
     { new: true }).lean();
 }
 
-// Creates a new game and assigns it to the user ID
-export async function createGame(user_id: string, size: number) {
-    const user_exists = await UserModel.exists({ _id: user_id });
-    if (!user_exists) return null;
+// Deletes a game based on game ID and its user
+export async function deleteGame(user_id: string, game_id: string) {
+    const result = await GameModel.deleteOne({
+        _id: new mongoose.Types.ObjectId(game_id),
+        user_id: new mongoose.Types.ObjectId(user_id)
+    });
 
-    const game = {
-        user_id: new mongoose.Types.ObjectId(user_id),
-        size: size,
-        gameboard: new Array(size ** 2).fill(undefined)
-    }
-    return GameModel.create(game);
+    if (result.deletedCount !== 1) return false;
+    return true;
 }
