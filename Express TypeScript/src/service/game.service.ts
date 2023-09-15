@@ -24,9 +24,7 @@ export async function updateGameState
     (user_id: string, game_id: string, index: number, colour: string,
      turn: number) {
         const game_state = await getGameById(user_id, game_id);
-        if (!game_state) {
-            return null
-        }
+        if (!game_state) return null;
 
         const move: GameCell = {
             user_id: new mongoose.Types.ObjectId(user_id),
@@ -39,13 +37,17 @@ export async function updateGameState
         const status = isTerminal(game_state, index, colour);
         let winner: string | undefined;
         if (status !== GameStatus.CONTINUE) {
-            winner = move.colour;
+            winner = status === GameStatus.DRAW
+                ? status
+                : move.colour;
         }
 
         const return_state = await GameModel.findOneAndUpdate({
             _id: new mongoose.Types.ObjectId(game_id),
             user_id: new mongoose.Types.ObjectId(user_id)
-        }, { gameboard: game_state.gameboard, winner: winner }, { new: true }).lean();
+        },
+        { gameboard: game_state.gameboard, winner: winner },
+        { new: true }).lean();
 
         return {
             status: status,
@@ -53,12 +55,23 @@ export async function updateGameState
         }
 }
 
+// Resets a game state for a game ID and its user
+export async function resetGameState(user_id: string, game_id: string) {
+    const game_state = await getGameById(user_id, game_id);
+    if (!game_state) return null;
+
+    return GameModel.findOneAndUpdate({
+        _id: new mongoose.Types.ObjectId(game_id),
+        user_id: new mongoose.Types.ObjectId(user_id)
+    },
+    { gameboard: game_state.gameboard.fill(undefined), $unset: { winner: 1 } },
+    { new: true }).lean();
+}
+
 // Creates a new game and assigns it to the user ID
 export async function createGame(user_id: string, size: number) {
     const user_exists = await UserModel.exists({ _id: user_id });
-    if (!user_exists) {
-        return null;
-    }
+    if (!user_exists) return null;
 
     const game = {
         user_id: new mongoose.Types.ObjectId(user_id),
