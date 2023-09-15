@@ -1,25 +1,23 @@
 import styles from "./Pebble.module.css";
 import { GameStatus, PlayerColour } from "../constants";
 import { useContext, useEffect, useState } from "react";
-import { GameboardContext, TurnContext } from "../contexts";
+import { GameboardContext } from "../contexts";
 
 type PebbleProps = {
   move?: number;
   colour?: PlayerColour;
-};
+}
 
 export default function Pebble({ move, colour }: PebbleProps) {
-  const { status } = useContext(GameboardContext);
-  const { turn, nextTurn } = useContext(TurnContext);
+  const { status, turn, nextTurn } = useContext(GameboardContext);
   const [colourStyle, setColourStyle] = useState("");
 
   // Render coloured pebble or numbered pebble depending if game or game log
   useEffect(() => {
     if (!colourStyle) {
       let style: string;
-      if (!move) {
-        style = turn!.turn === PlayerColour.BLACK ? styles.black : styles.white;
-        if (status === GameStatus.NOT_OVER) nextTurn();
+      if (!move && status === GameStatus.CONTINUE) {
+        style = turn === PlayerColour.BLACK ? styles.black : styles.white;
       } else {
         style = colour === PlayerColour.BLACK ? styles.black : styles.white;
       }

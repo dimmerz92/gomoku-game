@@ -1,8 +1,8 @@
-import { GameBoard, Games } from "../types";
+import { Game, GameBoard, Games } from "../types";
 import { GameboardContext } from "../contexts";
 import { useState } from "react";
 import { GameStatus, PlayerColour } from "../constants";
-import { post } from "../utils/http";
+import { post, put } from "../utils/http";
 import { useNavigate } from "react-router-dom";
 
 type GameboardProviderProps = {
@@ -14,7 +14,7 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
   const [status, setStatus] = useState<GameStatus | undefined>(undefined);
   const [size, setSize] = useState<number | undefined>(undefined);
   const [turn, setTurn] = useState<PlayerColour | undefined>(undefined);
-  const [count, setCount] = useState<number | undefined>(undefined);
+  const [count, setCount] = useState<number>(0);
   const navigateTo = useNavigate()
 
   const newBoard = async (size: number, callback: () => void) => {
@@ -33,8 +33,24 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
     //
   }
 
-  const nextTurn = (index: number) => {
-    //
+  const nextTurn = async (index: number) => {
+    const payload = {
+      index: index,
+      colour: turn,
+      turn: count
+    }
+    const result: Game = await put(`/api/game/${gameboard!._id}`, payload);
+    console.log(result)
+    if (!result) navigateTo("/");
+
+    setGameboard(result.state);
+    setStatus(result.status);
+    if (result.status == GameStatus.CONTINUE) {
+      setCount(count + 1);
+      setTurn(turn === PlayerColour.BLACK
+        ? PlayerColour.WHITE
+        : PlayerColour.BLACK);
+      }
   }
 
   const getGames = () => {
