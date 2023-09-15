@@ -1,37 +1,29 @@
 import styles from "./Gameboard.module.css";
 import { Cell } from ".";
+import { GameboardContext } from "../contexts";
 import { useContext } from "react";
-import { SizeContext } from "../contexts";
-import { Move } from "../types";
+import { GameCell } from "../types";
+import { PlayerColour } from "../constants";
 
 type GameboardProps = {
-  log?: Move[];
-};
+  log?: (GameCell | undefined)[];
+}
 
 export default function Gameboard({ log }: GameboardProps) {
-  const { size } = useContext(SizeContext);
+  const { size } = useContext(GameboardContext);
 
   // Determine grid size depending if game or game log
-  const gameboard = () => {
-    const grid = `repeat(${!log ? size!.size : Math.sqrt(log.length)}, 1fr)`;
+  const grid = () => `repeat(${size}, 1fr)`;
 
-    return (
-      <div className={styles.gameboard} style={{ gridTemplateColumns: grid }}>
-        {!log
-          ? [...Array(size!.size ** 2)].map((_, i) => (
-              <Cell key={i} cellId={i} />
-            ))
-          : log.map((move, i) => (
-              <Cell
-                key={i}
-                cellId={i}
-                move={move ? move.id : undefined}
-                colour={move ? move.player : undefined}
-              />
-            ))}
-      </div>
-    );
-  };
-
-  return gameboard();
+  return (
+    <div className={styles.gameboard} style={{ gridTemplateColumns: grid()}}>
+      {
+        !log
+          ? [...Array(size! ** 2)].map((_, i) => <Cell key={i} cellId={i} />)
+          : log.map((move, i) => <Cell key={i} cellId={i}
+              move={move ? move.turn : undefined}
+              colour={move ? move.colour as PlayerColour : undefined} />)
+      }
+    </div>
+  );
 }
