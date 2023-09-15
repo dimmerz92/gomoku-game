@@ -17,8 +17,8 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
   const [count, setCount] = useState<number | undefined>(undefined);
   const navigateTo = useNavigate()
 
-  const newBoard = async (size: number) => {
-    const result: GameBoard = await post("/game", { size: size });
+  const newBoard = async (size: number, callback: () => void) => {
+    const result: GameBoard = await post("/api/game", { size: size });
     if (!result) navigateTo("/");
 
     setGameboard(result);
@@ -26,6 +26,7 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
     setSize(size);
     setTurn(PlayerColour.BLACK);
     setCount(1);
+    callback();
   }
 
   const resetGame = () => {

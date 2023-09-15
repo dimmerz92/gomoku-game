@@ -7,7 +7,7 @@ type GameboardContextProps = {
   status: GameStatus | undefined;
   turn: PlayerColour | undefined;
   size: number | undefined;
-  newBoard: (size: number) => void;
+  newBoard: (size: number, callback: () => void) => void;
   resetGame: () => void;
   nextTurn: (index: number) => void;
   getGames: () => Games;
