@@ -52,3 +52,15 @@ export async function post<Req, Res>(path: string, body: Req): Promise<Res> {
         })
     );
 }
+
+export async function del(path: string): Promise<undefined | null> {
+    return await http<undefined | null>(
+        new Request(path, {
+            headers: {
+                ...(token && { Authorization: `Bearer ${token}` }),
+                "Content-Type": "application/json"
+            },
+            "method": "delete"
+        })
+    );
+}
