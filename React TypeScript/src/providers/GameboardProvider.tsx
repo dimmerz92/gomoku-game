@@ -29,8 +29,14 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
     callback();
   }
 
-  const resetGame = () => {
-    //
+  const resetGame = async () => {
+    const result: GameBoard = await post(`api/game/reset/${gameboard!._id}`, {});
+    if (!result) navigateTo("/");
+
+    setGameboard(result);
+    setStatus(GameStatus.CONTINUE);
+    setTurn(PlayerColour.BLACK);
+    setCount(1);
   }
 
   const nextTurn = async (index: number) => {
@@ -40,7 +46,6 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
       turn: count
     }
     const result: Game = await put(`/api/game/${gameboard!._id}`, payload);
-    console.log(result)
     if (!result) navigateTo("/");
 
     setGameboard(result.state);
