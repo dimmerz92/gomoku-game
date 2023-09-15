@@ -26,7 +26,7 @@ gameHandler.post("/",
 });
 
 // Updates the game state and returns the new game state
-gameHandler.put("/id/:game_id",
+gameHandler.put("/:game_id",
     validateSchema(updateGameSchema),
     async (req: Request, res: Response) => {
         const user_id = req.user_id;
@@ -41,8 +41,8 @@ gameHandler.put("/id/:game_id",
         if (!game_state) {
             return res.status(400).send("Bad Request");
         }
-
-        return res.status(200);
+        
+        return res.status(200).send(game_state);
 });
 
 // Returns a game
