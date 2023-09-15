@@ -3,10 +3,11 @@ import validateSchema from "../middleware/validateSchema";
 import { createGameSchema, updateGameSchema, getGameSchema } from
     "../schema/game.schema";
 import { createGame, getGameById, updateGameState } from "../service/game.service";
-import mongoose from "mongoose";
+import { deserialiseUser } from "../middleware/deserialiseUser";
  
 
 const gameHandler = express.Router();
+gameHandler.use(deserialiseUser);
 
 // Creates a new game
 gameHandler.post("/",
