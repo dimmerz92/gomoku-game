@@ -23,7 +23,7 @@ const putParams = {
     params: object({
         game_id: string({
             required_error: "Game ID is required"
-        }).regex(/^\d+$/).transform(Number)
+        })
     })
 }
 
@@ -31,7 +31,7 @@ const getParams = {
     params: object({
         game_id: string({
             required_error: "Game ID is required"
-        }).regex(/^\d+$/).transform(Number)
+        })
     })
 }
 
