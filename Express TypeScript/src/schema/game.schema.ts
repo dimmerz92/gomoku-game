@@ -19,7 +19,7 @@ const putPayload = {
     })
 }
 
-const putParams = {
+const getParams = {
     params: object({
         game_id: string({
             required_error: "Game ID is required"
@@ -27,7 +27,15 @@ const putParams = {
     })
 }
 
-const getParams = {
+const postParams = {
+    params: object({
+        game_id: string({
+            required_error: "Game ID is required"
+        })
+    })
+}
+
+const putParams = {
     params: object({
         game_id: string({
             required_error: "Game ID is required"
@@ -41,6 +49,9 @@ export const createGameSchema = object({
 export const updateGameSchema = object({
     ...putPayload,
     ...putParams
+});
+export const resetGameSchema = object({
+    ...postParams
 });
 export const getGameSchema = object({
     ...getParams
