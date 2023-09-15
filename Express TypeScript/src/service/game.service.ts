@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import UserModel from "../model/user.model";
 import GameModel, { GameInput, GameDocument, GameCell } from "../model/game.model";
 import { isTerminal } from "../game_logic/win_status";
+import { GameStatus } from "../enum/game.enum";
 
 // Retrieves a list of games belonging to a user
 export async function getGamesById(user_id: string) {
@@ -28,6 +29,10 @@ export async function updateGameState
         }
 
         const status = isTerminal(current_state, index, colour);
+        let winner: string | undefined;
+        if (status !== GameStatus.CONTINUE) {
+            winner = current_state.colour;
+        }
 
         const move: GameCell = {
             user_id: new mongoose.Types.ObjectId(user_id),
@@ -41,7 +46,7 @@ export async function updateGameState
         const return_state = await GameModel.findOneAndUpdate({
             _id: new mongoose.Types.ObjectId(game_id),
             user_id: new mongoose.Types.ObjectId(user_id)
-        }, { gameboard: new_state }, { new: true }).lean();
+        }, { gameboard: new_state, winner: winner }, { new: true }).lean();
 
         return {
             status: status,
