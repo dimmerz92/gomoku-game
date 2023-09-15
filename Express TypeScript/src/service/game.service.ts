@@ -23,15 +23,9 @@ export async function getGameById(user_id: string, game_id: string) {
 export async function updateGameState
     (user_id: string, game_id: string, index: number, colour: string,
      turn: number) {
-        const current_state = await getGameById(user_id, game_id);
-        if (!current_state) {
+        const game_state = await getGameById(user_id, game_id);
+        if (!game_state) {
             return null
-        }
-
-        const status = isTerminal(current_state, index, colour);
-        let winner: string | undefined;
-        if (status !== GameStatus.CONTINUE) {
-            winner = current_state.colour;
         }
 
         const move: GameCell = {
@@ -39,14 +33,19 @@ export async function updateGameState
             colour: colour,
             turn: turn
         }
-        
-        const new_state = current_state.gameboard.map(
-            (v, i) => i === index ? move : v);
+
+        game_state.gameboard[index] = move;
+
+        const status = isTerminal(game_state, index, colour);
+        let winner: string | undefined;
+        if (status !== GameStatus.CONTINUE) {
+            winner = move.colour;
+        }
 
         const return_state = await GameModel.findOneAndUpdate({
             _id: new mongoose.Types.ObjectId(game_id),
             user_id: new mongoose.Types.ObjectId(user_id)
-        }, { gameboard: new_state, winner: winner }, { new: true }).lean();
+        }, { gameboard: game_state.gameboard, winner: winner }, { new: true }).lean();
 
         return {
             status: status,
@@ -64,7 +63,7 @@ export async function createGame(user_id: string, size: number) {
     const game = {
         user_id: new mongoose.Types.ObjectId(user_id),
         size: size,
-        gameboard: new Array<undefined>(size ** 2)
+        gameboard: new Array(size ** 2).fill(undefined)
     }
     return GameModel.create(game);
 }
