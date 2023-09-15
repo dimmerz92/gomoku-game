@@ -14,6 +14,8 @@ export interface GameInput {
 
 export interface GameDocument extends GameInput, Document {
     gameboard: Array<undefined | GameCell>;
+    colour?: string;
+    winner?: string;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -43,6 +45,10 @@ const gameSchema = new mongoose.Schema({
     gameboard: {
         type: [cellSchema],
         required: true
+    },
+    winner: {
+        type: String,
+        required: false
     }
 }, {timestamps: true});
 
