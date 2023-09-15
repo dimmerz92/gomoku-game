@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
 import validateSchema from "../middleware/validateSchema";
-import { createGameSchema, updateGameSchema, getGameSchema } from
+import { createGameSchema, updateGameSchema, getGameSchema, resetGameSchema } from
     "../schema/game.schema";
-import { createGame, getGameById, updateGameState } from "../service/game.service";
+import { createGame, getGameById, resetGameState, updateGameState } from "../service/game.service";
 import { deserialiseUser } from "../middleware/deserialiseUser";
  
 
@@ -23,6 +23,21 @@ gameHandler.post("/",
         }
     
         return res.status(201).json(new_game);
+});
+
+// Resets a game
+gameHandler.post("/reset/:game_id",
+    validateSchema(resetGameSchema),
+    async (req: Request, res: Response) => {
+        const user_id = req.user_id;
+        const game_id = req.params.game_id;
+
+        const game_state = await resetGameState(user_id, game_id);
+        if (!game_state) {
+            return res.status(400).send("Bad Request");
+        }
+
+        return res.status(200).json(game_state);
 });
 
 // Updates the game state and returns the new game state
