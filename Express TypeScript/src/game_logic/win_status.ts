@@ -18,13 +18,15 @@ const diagCheck = (
 const linearCheck =
     (gameboard: (GameCell | undefined)[], size:number, index: number,
      colour: string, row: boolean = false): boolean => {
-        let arr: (string | undefined)[] = [];
+        let arr = new Array<string | undefined>(5).fill(undefined);
         // If row, get row, otherwise, get column
         if (row) {
-            arr = gameboard.slice(index, index + size).map((i) => i?.colour);
+            arr = gameboard.slice(index, index + size).map(i => i?.colour);
         } else {
+            let count = 0;
             for (let i = index; i < gameboard.length; i += size) {
-            arr.push(gameboard[i]?.colour);
+                arr[count] = gameboard[i]?.colour;
+                count++;
             }
         }
 
@@ -57,7 +59,7 @@ export const isTerminal =
 
         const vertical = linearCheck(gameboard, size, col, colour);
         const horizontal = linearCheck(gameboard, size, row, colour, true);
-        const draw = gameboard.every(i => i !== undefined);
+        const draw = gameboard.every(i => i !== null);
 
         if (r_diag || l_diag ||
             vertical || horizontal) {
