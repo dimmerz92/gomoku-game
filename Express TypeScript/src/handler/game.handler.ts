@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import validateSchema from "../middleware/validateSchema";
 import { createGameSchema, updateGameSchema, getGameSchema,
     resetGameSchema, deleteGameSchema } from "../schema/game.schema";
-import { createGame, deleteGame, getGameById, resetGameState, updateGameState }
+import { createGame, deleteGame, getGameById, getGamesById, resetGameState, updateGameState }
     from "../service/game.service";
 import { deserialiseUser } from "../middleware/deserialiseUser";
  
@@ -11,7 +11,7 @@ const gameHandler = express.Router();
 gameHandler.use(deserialiseUser);
 
 // Returns a game
-gameHandler.get("/id/:game_id",
+gameHandler.get("/one/:game_id",
     validateSchema(getGameSchema),
     async (req: Request, res: Response) => {
         const user_id = req.user_id;
@@ -23,6 +23,19 @@ gameHandler.get("/id/:game_id",
         }
 
         return res.status(200).json(game);
+});
+
+// Returns all games info for a user
+gameHandler.get("/all",
+    async (req: Request, res: Response) => {
+        const user_id = req.user_id;
+
+        const games = await getGamesById(user_id);
+        if (!games) {
+            return res.status(400).send("Bad Request");
+        }
+
+        return res.status(200).json(games);
 });
 
 // Creates a new game
@@ -73,7 +86,7 @@ gameHandler.put("/:game_id",
             return res.status(400).send("Bad Request");
         }
         
-        return res.status(204).send(game_state);
+        return res.status(200).send(game_state);
 });
 
 // Deletes a game
