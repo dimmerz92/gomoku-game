@@ -1,5 +1,5 @@
 import styles from "./Games.module.css";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GameboardContext } from "../contexts";
 import { GameItem } from "../components";
 import { GameBoards } from "../types";
