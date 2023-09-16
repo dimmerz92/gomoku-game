@@ -22,6 +22,8 @@ export type Game = {
     state: GameBoard;
 }
 
-export type Games = {
-    games: GameBoard[]
-}
+export type GameBoards = {
+    _id: string;
+    winner: string;
+    createdAt: string;
+}[]

@@ -1,8 +1,8 @@
-import { Game, GameBoard, Games } from "../types";
+import { Game, GameBoard, GameBoards } from "../types";
 import { GameboardContext } from "../contexts";
 import { useState } from "react";
 import { GameStatus, PlayerColour } from "../constants";
-import { del, post, put } from "../utils/http";
+import { get, post, put, del } from "../utils/http";
 import { useNavigate } from "react-router-dom";
 
 type GameboardProviderProps = {
@@ -41,7 +41,9 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
   }
 
   const leaveGame = async (callback: () => void) => {
-    await del(`/api/game/delete/${gameboard!._id}`);
+    if (status === GameStatus.CONTINUE){
+      await del(`/api/game/delete/${gameboard!._id}`);
+    }
     setGameboard(undefined);
     setStatus(undefined);
     setSize(undefined);
@@ -61,7 +63,7 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
 
     setGameboard(result.state);
     setStatus(result.status);
-    if (result.status == GameStatus.CONTINUE) {
+    if (result.status === GameStatus.CONTINUE) {
       setCount(count + 1);
       setTurn(turn === PlayerColour.BLACK
         ? PlayerColour.WHITE
@@ -69,14 +71,28 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
       }
   }
 
-  const getGames = () => {
-    return {} as Games
+  const getGame = async (game_id: string) => {
+    const result = await get<GameBoard>(`/api/game/one/${game_id}`);
+    if (!result) navigateTo("/");
+    return result;
+  }
+
+  const getGames = async () => {
+    const result = await get<GameBoards>("/api/game/all");
+    if (!result) navigateTo("/");
+    return result;
+  }
+
+  const gameLog = (game: GameBoard) => {
+    setGameboard(game);
+    setSize(game.size);
+    setTurn(game.winner as PlayerColour);
   }
 
   return (
     <GameboardContext.Provider
       value={{ gameboard, status, turn, size,
-        newBoard, resetGame, leaveGame, nextTurn, getGames }}>
+        newBoard, resetGame, leaveGame, nextTurn, getGame, getGames }}>
           {children}
     </GameboardContext.Provider>
   );

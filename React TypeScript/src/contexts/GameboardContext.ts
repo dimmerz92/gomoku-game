@@ -1,5 +1,5 @@
 import { GameStatus, PlayerColour } from "../constants";
-import { GameBoard, Games } from "../types";
+import { GameBoard, GameBoards } from "../types";
 import { createContext } from "react";
 
 type GameboardContextProps = {
@@ -11,7 +11,8 @@ type GameboardContextProps = {
   resetGame: () => void;
   leaveGame: (callback: () => void) => void;
   nextTurn: (index: number) => void;
-  getGames: () => Games;
+  getGame: (game_id: string) => Promise<GameBoard>;
+  getGames: () => Promise<GameBoards>;
 }
 
 const GameboardContext = createContext<GameboardContextProps>
