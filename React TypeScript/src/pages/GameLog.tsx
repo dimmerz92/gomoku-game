@@ -1,19 +1,28 @@
 import styles from "./Game.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Gameboard } from "../components";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GameboardContext } from "../contexts";
+import { GameBoard } from "../types";
 
 export default function GameLog() {
-  const { getGames } = useContext(GameboardContext);
-  const { gameid } = useParams();
+  const { getGame, setGameLog } = useContext(GameboardContext);
+  const { game_id } = useParams();
+  const [log, setLog] = useState<GameBoard | undefined>(undefined);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigateTo = useNavigate();
 
-  // Return nothing if gameid or games undefined
-  if (!gameid) return null;
-  const games = getGames();
-  if (!games) return null;
-  const log = games.find((l) => l.id === parseInt(gameid!))?.log;
+  useEffect(() => {
+    if (game_id && loading) {
+      getGame(game_id!).then(fetchedGames => {
+        setLog(fetchedGames as GameBoard);
+        setGameLog(fetchedGames as GameBoard);
+        setLoading(false);
+      });
+    }
+  }, [game_id, getGame, setLog, setLoading]);
+
+  if (loading) return null;
 
   return (
     <>
