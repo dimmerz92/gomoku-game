@@ -2,11 +2,11 @@ import styles from "./Gameboard.module.css";
 import { Cell } from ".";
 import { GameboardContext } from "../contexts";
 import { useContext } from "react";
-import { GameCell } from "../types";
+import { GameBoard } from "../types";
 import { PlayerColour } from "../constants";
 
 type GameboardProps = {
-  log?: (GameCell | undefined)[];
+  log?: GameBoard;
 }
 
 export default function Gameboard({ log }: GameboardProps) {
@@ -20,7 +20,7 @@ export default function Gameboard({ log }: GameboardProps) {
       {
         !log
           ? [...Array(size! ** 2)].map((_, i) => <Cell key={i} cellId={i} />)
-          : log.map((move, i) => <Cell key={i} cellId={i}
+          : log.gameboard.map((move, i) => <Cell key={i} cellId={i}
               move={move ? move.turn : undefined}
               colour={move ? move.colour as PlayerColour : undefined} />)
       }
