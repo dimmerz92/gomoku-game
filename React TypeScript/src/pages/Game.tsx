@@ -19,7 +19,7 @@ export default function Game() {
   // Handle leave button click
   const leave = () => {
     leaveGame(() => {
-      navigateTo("/");
+      navigateTo("/games");
     });
   }
 
