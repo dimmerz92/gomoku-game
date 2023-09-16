@@ -11,8 +11,9 @@ type GameboardContextProps = {
   resetGame: () => void;
   leaveGame: (callback: () => void) => void;
   nextTurn: (index: number) => void;
-  getGame: (game_id: string) => Promise<GameBoard>;
   getGames: () => Promise<GameBoards>;
+  getGame: (game_id: string) => Promise<GameBoard>;
+  setGameLog: (game: GameBoard) => void;
 }
 
 const GameboardContext = createContext<GameboardContextProps>

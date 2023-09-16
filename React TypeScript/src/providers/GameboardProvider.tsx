@@ -83,7 +83,7 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
     return result;
   }
 
-  const gameLog = (game: GameBoard) => {
+  const setGameLog = async (game: GameBoard) => {
     setGameboard(game);
     setSize(game.size);
     setTurn(game.winner as PlayerColour);
@@ -92,7 +92,8 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
   return (
     <GameboardContext.Provider
       value={{ gameboard, status, turn, size,
-        newBoard, resetGame, leaveGame, nextTurn, getGame, getGames }}>
+        newBoard, resetGame, leaveGame, nextTurn,
+        getGames, getGame, setGameLog }}>
           {children}
     </GameboardContext.Provider>
   );
