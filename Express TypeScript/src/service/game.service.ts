@@ -8,7 +8,7 @@ import { GameStatus } from "../enum/game.enum";
 export async function getGamesById(user_id: string) {
     return GameModel.find({
         user_id: new mongoose.Types.ObjectId(user_id)
-    }).lean();
+    }, "_id winner createdAt",).sort({createdAt: "desc"});
 }
 
 // Retrieves a game by it's ID, ensuring it belongs to the requesting user
