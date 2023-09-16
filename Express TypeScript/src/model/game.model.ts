@@ -29,6 +29,10 @@ const cellSchema = new mongoose.Schema({
     colour: {
         type: String,
         required: true
+    },
+    turn: {
+        type: Number,
+        required: true
     }
 });
 
