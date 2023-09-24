@@ -3,6 +3,7 @@ import { UserContext } from "../contexts";
 import { User, Credential } from "../types";
 import { post, setToken } from "../utils/http";
 import GameboardProvider from "./GameboardProvider";
+import { API_HOST } from "../constants";
 
 type UserProviderProps = {
   children: React.ReactNode;
@@ -17,7 +18,7 @@ export default function UserProvider({ children }: UserProviderProps) {
   // Updates user state with username on log in
   const login = async (username: string, password: string) => {
     try {
-      const user = await post<Credential, User>("/api/auth/login", {
+      const user = await post<Credential, User>(`${API_HOST}/api/auth/login`, {
         username,
         password
       });
@@ -32,7 +33,7 @@ export default function UserProvider({ children }: UserProviderProps) {
   
   const register = async (username: string, password: string) => {
     try {
-      const user = await post<Credential, User>("/api/auth/register", {
+      const user = await post<Credential, User>(`${API_HOST}/api/auth/register`, {
         username,
         password
       });

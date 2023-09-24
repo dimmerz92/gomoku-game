@@ -1,7 +1,7 @@
 import { Game, GameBoard, GameBoards } from "../types";
 import { GameboardContext } from "../contexts";
 import { useState } from "react";
-import { GameStatus, PlayerColour } from "../constants";
+import { API_HOST, GameStatus, PlayerColour } from "../constants";
 import { get, post, put, del } from "../utils/http";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +18,7 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
   const navigateTo = useNavigate()
 
   const newBoard = async (size: number, callback: () => void) => {
-    const result: GameBoard = await post("/api/game", { size: size });
+    const result: GameBoard = await post(`${API_HOST}/api/game`,{ size: size });
     if (!result) navigateTo("/");
 
     setGameboard(result);
@@ -31,7 +31,7 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
 
   const resetGame = async () => {
     const result: GameBoard = await post
-      (`/api/game/reset/${gameboard!._id}`, {});
+      (`${API_HOST}/api/game/reset/${gameboard!._id}`, {});
     if (!result) navigateTo("/");
 
     setGameboard(result);
@@ -42,7 +42,7 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
 
   const leaveGame = async (callback: () => void) => {
     if (status === GameStatus.CONTINUE){
-      await del(`/api/game/delete/${gameboard!._id}`);
+      await del(`${API_HOST}/api/game/delete/${gameboard!._id}`);
     }
     setGameboard(undefined);
     setStatus(undefined);
@@ -58,7 +58,7 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
       colour: turn,
       turn: count
     }
-    const result: Game = await put(`/api/game/${gameboard!._id}`, payload);
+    const result: Game = await put(`${API_HOST}/api/game/${gameboard!._id}`, payload);
     if (!result) navigateTo("/");
 
     setGameboard(result.state);
@@ -72,13 +72,13 @@ function GameboardProvider ({ children }: GameboardProviderProps) {
   }
 
   const getGame = async (game_id: string) => {
-    const result = await get<GameBoard>(`/api/game/one/${game_id}`);
+    const result = await get<GameBoard>(`${API_HOST}/api/game/one/${game_id}`);
     if (!result) navigateTo("/");
     return result;
   }
 
   const getGames = async () => {
-    const result = await get<GameBoards>("/api/game/all");
+    const result = await get<GameBoards>(`${API_HOST}/api/game/all`);
     if (!result) navigateTo("/");
     return result;
   }
