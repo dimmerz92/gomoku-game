@@ -20,7 +20,7 @@ export default function GameLog() {
         setLoading(false);
       });
     }
-  }, [game_id, getGame, setLog, setLoading]);
+  }, [game_id, loading, getGame, setLog, setLoading]);
 
   if (loading) return null;
 
