@@ -1,0 +1,35 @@
+.sizeButtons {
+  display: grid;
+  align-self: center;
+  width: 20rem;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "space space space space"
+    "button1 button2 button3 button4"
+    ". button5 button5 .";
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.unselected {
+  grid-area: space;
+  height: 1rem;
+  text-align: center;
+  color: crimson;
+}
+
+.sizeButtons > :nth-child(2) {
+  grid-area: button1;
+}
+.sizeButtons > :nth-child(3) {
+  grid-area: button2;
+}
+.sizeButtons > :nth-child(4) {
+  grid-area: button3;
+}
+.sizeButtons > :nth-child(5) {
+  grid-area: button4;
+}
+.sizeButtons > :nth-child(6) {
+  grid-area: button5;
+}

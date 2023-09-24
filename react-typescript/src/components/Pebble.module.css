@@ -1,0 +1,26 @@
+.pebble {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  width: 80%;
+  border-radius: 50%;
+}
+
+.black {
+  color: white;
+  background: radial-gradient(
+    circle at 33% 33%,
+    var(--pebble-black-light) 20%,
+    var(--pebble-black-dark) 50%,
+    #000
+  );
+}
+
+.white {
+  background: radial-gradient(
+    circle at 33% 33%,
+    var(--pebble-white) 40%,
+    #000 95%
+  );
+}
