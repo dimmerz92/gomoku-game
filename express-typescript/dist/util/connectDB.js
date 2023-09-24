@@ -20,7 +20,7 @@ const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
         yield mongoose_1.default.connect(dbURI);
     }
     catch (error) {
-        console.log("[server]: Could not establish connection to database");
+        console.log("⚡️[server]: Could not establish connection to database");
         console.log(error);
         process.exit(1);
     }
